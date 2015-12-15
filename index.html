@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/cehq.css">
+
+  <link rel="shortcut icon" href="images/cehq-icons/cehq-icon.ico"/>
+
+  <link rel="apple-touch-icon" sizes="57x57"   href="images/cehq-icons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60"   href="images/cehq-icons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72"   href="images/cehq-icons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76"   href="images/cehq-icons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="images/cehq-icons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="images/cehq-icons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="images/cehq-icons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="images/cehq-icons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/cehq-icons/apple-touch-icon-180x180.png">
+
+  <link rel="icon" sizes="16x16" type="image/png" href="images/cehq-icons/favicon-16x16.png">
+  <link rel="icon" sizes="32x32" type="image/png" href="images/cehq-icons/favicon-32x32.png">
+  <link rel="icon" sizes="96x96" type="image/png" href="images/cehq-icons/favicon-96x96.png">
+
+  <link rel="icon" sizes="192x192" type="image/png" href="images/cehq-icons/android-chrome-192x192.png">
+
+  <title>myCEHQ</title>
+
+</head>
+
+<body ng-app="cehqApp" ng-controller="NavBarCtrl">
+
+<a href="#/mainMenuItems[0].page" ng-click="toggleMenu(mainMenuItems[0].page)">
+  <img class="logo desktop-show menu-link" src="images/cehq-logo-transparent.png">
+</a>
+
+<nav class="navbar navbar-default">
+
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+
+      <button type="button" class="navbar-toggle collapsed" ng-click="toggleMenu()">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a href="#/mainMenuItems[0].page" ng-click="toggleMenu(mainMenuItems[0].page)">
+        <img src="images/cehq-logo-transparent-small.png"
+             class="menu-link navbar-brand img-small nav-logo navbar-toggle collapsed">
+      </a>
+
+    </div>
+
+    <div class="collapse navbar-collapse" collapse="isCollapsed">
+
+      <ul class="nav navbar-nav navbar-left">
+        <li class="menu-link" ng-class="isCurrentPage(menuItem.page)" ng-repeat="menuItem in mainMenuItems">
+          <a ng-click="toggleMenu(menuItem.page)" href="#/{{menuItem.page}}">{{menuItem.label}}</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="menu-link" ng-click="openModal(menuItem.page)" ng-repeat="menuItem in rightMenuItems">
+          <a>{{menuItem.label}}</a>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<article class="main-article">
+
+  <div ng-view></div>
+
+</article>
+
+<ng-include src="'views/footer.html'"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
+<script src="scripts/angular-route.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers.js"></script>
+<script src="scripts/constants.js"></script>
+<script src="scripts/services.js"></script>
+
+</body>
+</html>
