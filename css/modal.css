@@ -1,0 +1,36 @@
+.app-modal-window .modal-dialog {
+  width: 300px;
+}
+
+.signin {
+  padding: 0px 5px;
+}
+
+.modal-body {
+  padding: 10px;
+  background-image: url(../images/bg.jpg);
+  background-repeat: repeat-x;
+  border: 1px lightgrey solid;
+  display: block;
+ }
+
+.modal-article {
+  background-color: white;
+  border: solid 1px lightgrey;
+  padding: 10px;
+}
+
+.img-modal-logo {
+  margin-bottom: 10px;
+}
+
+.forgot {
+  text-decoration: none !important;
+  text-align: left !important;
+  padding-bottom: 5px !important;
+  display: block;
+}
+
+a.forgot:hover {
+  text-decoration: underline !important;
+}

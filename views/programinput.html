@@ -1,0 +1,64 @@
+<!doctype html>
+
+    <h2>Program Input Form</h2>
+
+    <form name="program-input-form" class="program-form" ng-controller="InputFormCtrl">
+
+        <div>
+            <button class="back-button" ng-click="goToProgramView('/programview')" type="Button">back</button>
+            <button class="clear-button" ng-click="clearForm()" type="Button">clear</button>
+        </div>
+
+        <div>
+            <h5 class="program-name-input-field">Program Name:</h5>
+            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="programName" />
+        </div>
+
+        <div>
+            <h5>Goal:</h5>
+            <input class="default-input-field" type="text" id="" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Objectives:</h5>
+            <input class="default-input-field" type="text" id="" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Keywords (separated by commas):</h5>
+            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Learning Assignment Name #1:</h5>
+            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Learning Assignment URL:</h5>
+            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Learning Assignment Question:</h5>
+            <input class="default-input-field" type="text" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Learning Assignment Distractor #1:</h5>
+            <input class="default-input-field" type="text" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Learning Assignment Distractor #2:</h5>
+            <input class="default-input-field" type="text" ng-model="" />
+        </div>
+
+        <div>
+            <h5>Learning Assignment Answer:</h5>
+            <input class="default-input-field" type="text" ng-model="" />
+        </div>
+
+        <button class="send-program-button" ng-click="sendPost()" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
+
+    </form>

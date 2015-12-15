@@ -1,0 +1,10 @@
+<!doctype html>
+
+<h4>{{siteName}}</h4>
+
+<button ng-click="showURL()">Show</button>
+
+<iframe id="theIFrame" onLoad="recordURL(this.contentWindow.location.href)"
+        ng-src="{{siteURL}}"></iframe>
+
+<!--<iframe ng-src="http://www.dchung.com/cehq"></iframe>-->

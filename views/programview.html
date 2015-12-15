@@ -1,0 +1,44 @@
+<!doctype html>
+
+    <h2>Programs View</h2>
+
+    <form class="program-form" ng-controller="ViewFormCtrl">
+
+        <button class="go-to-program-input-button" ng-click="goToProgramInput('/programinput')" type="submit" >New Program</button>
+
+        <div class="program-list" ng-controller="ViewFormCtrl">
+            <h3>Draft Program List</h3>
+            <h1></h1>
+            <select style="width: 100%;" ng-dblclick="goToProgramInput('/programinput')" class="text-center" size="10" ng-model="currentItems" multiple
+                ng-multiple="true"
+                ng-options="el as el.name for el in draftPrograms"></select>
+        </div>
+
+        <input class="program-filter-input-field" type="search" placeholder="Search..." />
+
+
+        <div class="program-list"  ng-controller="ViewFormCtrl">
+            <h3>Submitted Program List</h3>
+            <h1></h1>
+            <select style="width: 100%;" ng-dblclick="goToProgramInput('/programinput')" class="text-center" size="10" ng-model="currentItems" multiple
+                    ng-multiple="true"
+                    ng-options=""></select>
+        </div>
+
+        <input class="program-filter-input-field" type="search" placeholder="Search..." />
+
+
+        <div class="program-list" ng-controller="ViewFormCtrl">
+            <h3>Accepted Program List</h3>
+            <h1></h1>
+            <select style="width: 100%;" ng-dblclick="goToProgramInput('/programinput')" class="text-center" size="10" ng-model="currentItems" multiple
+                    ng-multiple="true"
+                    ng-options=""></select>
+        </div>
+
+        <input class="program-filter-input-field" placeholder="Search..." />
+
+    </form>
+
+
+
