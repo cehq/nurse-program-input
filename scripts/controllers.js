@@ -93,7 +93,7 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 
 cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location) {
 
-  $scope.hello = { "id" : "", "name" : ""  };
+  $scope.program = { "id" : "", "name" : ""  };
 
   $scope.goToProgramView = function ( path ) {
     $location.path( path );
@@ -103,13 +103,20 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location) 
     document.getElementById('programNameInputBox').value = "";
   };
 
+  //Constructs JSON object from the input field values. This gets called just before the object is sent to the server
+  $scope.createJSON = function () {
+    $scope.program.name = $scope.programName;
+  }
+  
   $scope.sendPost = function() {
-      $scope.hello.name = $scope.programName;
-      $http.post("http://52.32.118.8:8080/CEHQWebServices/programs", $scope.hello).success(function(data) {
-          console.log("sent data" + $scope.hello);
-      });
+    $scope.createJSON()
+    $http.post("http://52.32.118.8:8080/CEHQWebServices/programs", $scope.program).success(function(data) {
+      console.log("sent data" + $scope.program.name);
+      $scope.clearForm();
 
-    document.getElementById('programNameInputBox').value = "";
+      // GOTO top of page
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    });
   }
 });
 
