@@ -101,7 +101,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     });
   } else {
     $scope.program = { "id" : "", "name" : ""  };
-    $scope.program.objectives = [{"objective": ""}, {"objective": ""}, {"objective": ""}];
+    $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
     $scope.program['learning-activities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
   }
 
