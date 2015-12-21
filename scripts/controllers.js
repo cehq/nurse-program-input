@@ -120,22 +120,20 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location) 
   }
 });
 
-cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location) {
+cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
 
   $scope.goToProgramInput = function ( path ) {
     $location.path( path );
   };
 
+
+
   // on page load, send request for program list
   $scope.$on('$viewContentLoaded', function() {
-    $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/')
-        .then(function(result) {
-          $scope.draftPrograms = result.data.reverse();
-          for (var i=0; i < $scope.draftPrograms.length; i++)
-          {
-            console.log($scope.draftPrograms[i].name)
-          }
-        });
+    server.getPrograms().then(function(programs) {
+      //alert(JSON.stringify(programs));
+      $scope.draftPrograms = programs.data.reverse();
+    });
   });
 
 });

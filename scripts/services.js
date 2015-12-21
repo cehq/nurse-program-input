@@ -1,7 +1,7 @@
 var cehqServices = angular.module('cehq.services', []);
 
 // all server access is now abstracted in the 'server' object
-cehqServices.factory('server', function( messages, appConstants ){
+cehqServices.factory('server', function( messages, appConstants, $http ){
 
   return {
 
@@ -59,8 +59,11 @@ cehqServices.factory('server', function( messages, appConstants ){
 
       xmlHttp.send( null );
 
-    }
+    },
 
+    getPrograms: function() {
+      return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+    }
   };
 
 });
