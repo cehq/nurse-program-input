@@ -98,7 +98,6 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     server.getProgram(id).then(function (program) {
       console.log("InputFormCtrl: " + id);
       $scope.program = program.data;
-      $scope.programName
     });
   }
   //$scope.program = { "id" : "", "name" : ""  };

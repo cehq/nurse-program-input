@@ -15,49 +15,84 @@
         </div>
 
         <div>
-            <h5>Goal:</h5>
-            <input class="default-input-field" type="text" id="" ng-model="" />
-        </div>
-
-        <div>
             <h5>Objectives:</h5>
-            <input class="default-input-field" type="text" id="" ng-model="" />
+            <!-- <input class="default-input-field" type="text" id="" ng-model="" />-->
+            <ul class="list-unstyled">
+                <li ng-repeat="objItem in program.objectives track by $index">
+                    <input class="default-input-field"
+                           ng-value="{{objItem.objective}}"
+                           value="{{objItem.objective}}"
+                           ng-model="program.objectives[$index].objective" />
+                </li>
+            </ul>
+
         </div>
 
         <div>
             <h5>Keywords (separated by commas):</h5>
-            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="" />
-        </div>
-
-        <div>
-            <h5>Learning Assignment Name #1:</h5>
-            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="" />
-        </div>
-
-        <div>
-            <h5>Learning Assignment URL:</h5>
-            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="" />
-        </div>
-
-        <div>
-            <h5>Learning Assignment Question:</h5>
             <input class="default-input-field" type="text" ng-model="" />
         </div>
 
         <div>
-            <h5>Learning Assignment Distractor #1:</h5>
-            <input class="default-input-field" type="text" ng-model="" />
+            <h5>Goal:</h5>
+            <textarea rows="4" class="default-input-field" id="" ng-model="program.goal"> </textarea>
         </div>
 
-        <div>
-            <h5>Learning Assignment Distractor #2:</h5>
-            <input class="default-input-field" type="text" ng-model="" />
-        </div>
+        <accordion close-others="true" >
+            <accordion-group  is-open="false"
+                              ng-repeat="activity in program['learning-activities'] track by $index"
+                              >
+                <accordion-heading>
+                    {{activity.name}}
+                </accordion-heading>
 
-        <div>
-            <h5>Learning Assignment Answer:</h5>
-            <input class="default-input-field" type="text" ng-model="" />
-        </div>
+                <div>
+                    <h5>Learning Assignment Name:</h5>
+                    <input class="default-input-field" type="text" ng-model="program['learning-activities'][$index].name" ng-value="{{activity.name}}" />
+                </div>
+
+                <div>
+                    <h5>Learning Assignment URL:</h5>
+                    <input class="default-input-field" type="text" ng-model="program['learning-activities'][$index].url" ng-value="{{activity.url}}"  />
+                </div>
+
+                <div>
+                    <h5>Learning Assignment Question:</h5>
+                    <textarea rows="3" class="default-input-field"
+                              ng-model="program['learning-activities'][$index]['review-question'].stem"
+                              ng-value="{{program['learning-activities'][$index]['review-question'].stem}}"> </textarea>
+                </div>
+
+                <div>
+                    <div>
+                        <span><p>Choice #1 <span ng-show="choice.data == 1" class="right-answer">(correct)</span></p>
+                            <input type="radio" name="isAnswer" ng-model="choice.data" ng-value="1" />
+                            <input class="default-input-field" type="text"
+                                   ng-model="program['learning-activities'][$index]['review-question'].choices[0].text"
+                                   ng-value="{{program['learning-activities'][$index]['review-question'].choices[0]}}"/></span>
+                        <span><p>Choice #2 <span ng-show="choice.data == 2" class="right-answer">(correct)</span></p>
+                            <input type="radio" name="isAnswer" ng-model="choice.data" ng-value="2"/>
+                            <input class="default-input-field" type="text"
+                                   ng-model="program['learning-activities'][$index]['review-question'].choices[1].text"
+                                   ng-value="{{activity.url}}"/></span>
+                    </div>
+                    <div>
+                        <span><p>Choice #3 <span ng-show="choice.data == 3" class="right-answer">(correct)</span></p>
+                            <input type="radio" name="isAnswer" ng-model="choice.data" ng-value="3"/>
+                            <input class="default-input-field" type="text"
+                                   ng-model="program['learning-activities'][$index]['review-question'].choices[2].text"
+                                   ng-value="{{activity.url}}"/></span>
+                        <span><p>Choice #4 <span ng-show="choice.data == 4" class="right-answer">(correct)</span></p>
+                            <input type="radio" name="isAnswer" ng-model="choice.data" ng-value="4" />
+                            <input class="default-input-field" type="text"
+                                   ng-model="program['learning-activities'][$index]['review-question'].choices[3].text"
+                                   ng-value="{{activity.url}}"/></span>
+                    </div>
+
+
+                </div>
+            </accordion-group>
+        </accordion>
 
         <button class="send-program-button" ng-click="sendPost()" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
 

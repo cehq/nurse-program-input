@@ -1,0 +1,211 @@
+[{
+    "id": 1001,
+    "name": "Care of Patient with Type II Diabetes",
+    "status": "2/5",
+    "complete" : 2,
+    "goal": "The goal of the Learning Activities in this Program is to provide information on best practices in the nursing care of persons with Type II diabetes to understand the pathophysiology, treatment, and nursing interventions for patients with Type II diabetes.",
+    "version": 1,
+    "objectives": [{
+      "objective": "Describe the landmarks in diabetes care"
+    }, {
+      "objective": "Examine type II diabetes guideline updates and their impact on clinical practice"
+    }, {
+      "objective": "Develop safe and effective care plans for patients with type II diabetes"
+    }],
+    "learning-activities": [{
+      "id": 72,
+      "name": "Landmarks in Diabetes:  1995 to 2015",
+      "shortname": "Landmarks in Diabetes",
+      "url": "http://www.cdc.gov/pcd/issues/2011/nov/10_0221.htm",
+      "eval": "The objective for this learning activity is to be able to describe the landmarks in diabetes care.",
+      "review-question": {
+        "type": "choice",
+        "stem": "What drug did this article call 'A Game Changer?'",
+        "choices": [
+          {  "text": "Metformin" },
+          {  "text": "Beta-Blockers"},
+          {  "text": "Insulin", "answer": "yes"}
+        ]
+      }
+    }, {
+      "id": 2,
+      "name": "Diabetes Mellitus",
+      "shortname": "Diabetes Mellitus",
+      "url": "http://wonder.cdc.gov/wonder/prevguid/p0000063/p0000063.asp",
+      "eval": "The objective for this learning activity is to be able to examine type II diabetes guideline updates and their impact on clinical practice.",
+      "review-question": {
+        "type": "choice",
+        "stem": "What approaches to prevention of diabetic complications did this article mention?",
+        "choices": [
+          { "text": "Yearly dilated eye examinations" },
+          { "text": "Foot examinations at each visit" },
+          { "text": "Statin Therapy"},
+          { "text": "All of the Above", "answer": "yes"}
+        ]
+      }
+    }, {
+      "id": 3,
+      "name": "Standards of Care",
+      "shortname": "Standards of Care",
+      "url": "http://www.cdc.gov/pcd/issues/2012/11_0313.htm",
+      "is_complete": "true",
+      "eval": "The objective for this learning activity is to be able to examine type II diabetes guideline updates and their impact on clinical practice.",
+      "review-question": {
+        "type": "tf",
+        "stem": "A pre-meal glucose target is 80-130 mg/dL versus the older target of 70-130 mg/dL.",
+        "answer": "false"
+      }
+    }, {
+      "id": 4,
+      "name": "Nutrition in Patients with Diabetes",
+      "shortname": "Nutrition and Diabetes",
+      "url": "http://emedicine.medscape.com/article/2049455-overview#aw2aab6b3",
+      "eval": "The objective for this learning activity is to be able develop safe and effective care plans for patients with type II diabetes.",
+      "review-question": {
+        "type": "tf",
+        "stem": "The “Mediterranean Diet” may be a good option for diabetic patients.",
+        "answer": "true"
+      }
+    }, {
+      "id": 5,
+      "name": "Critical Issues in Diabetes: Choosing Newer Drugs for Type 2 Diabetes",
+      "shortname": "Critical Issues in Diabetes",
+      "url": "http://www.cdc.gov/chronicdisease/overview/index.htm",
+      "is_complete": "true",
+      "eval": "The objective for this learning activity is to be able develop safe and effective care plans for patients with type II diabetes.",
+      "review-question": {
+        "type": "tf",
+        "stem": "DPP-4 Inhibitors may be used with dose modifications in patients with renal disease.",
+        "answer": "false"
+      }
+    }]
+  }, {
+    "id": 1020,
+    "name": "Insulin Injection Sites",
+    "status": "1/5",
+    "complete" : 1,
+    "goal": "The goal of the Learning Activities in this Program is to provide information on Insulin Injection Sites.",
+    "objectives": [{
+      "objective": "Describe the Insulin Injection Sites"
+    }, {
+      "objective": "Examine diabetes injection site guideline updates and their impact on clinical practice"
+    }, {
+      "objective": "Develop safe and effective care plans for patients with various Insulin Injection Sites"
+    }],
+    "learning-activities": [{
+      "id": 6,
+      "name": "Landmarks in Diabetes:  1995 to 2015",
+      "shortname": "Activity ID 6",
+      "url": "http://www.cdc.gov/pcd/issues/2011/nov/10_0221.htm",
+      "eval": "The objective for this learning activity is to be able to describe the landmarks in diabetes care.",
+      "review-question": {
+        "type": "choice",
+        "stem": "What drug did this article call ‘A Game Changer?’",
+        "choices": [
+          { "text": "Metformin" },
+          { "text": "Beta-Blockers" },
+          { "text": "Insulin", "answer": "yes" }
+        ]
+      }
+    }, {
+      "id": 20,
+      "name": "Diabetes Mellitus",
+      "shortname": "Activity ID 20",
+      "url": "http://wonder.cdc.gov/wonder/prevguid/p0000063/p0000063.asp#head003000000000000",
+      "eval": "The objective for this learning activity is to be able to examine type II diabetes guideline updates and their impact on clinical practice.",
+      "review-question": {
+        "type": "choice",
+        "stem": "What approaches to prevention of diabetic complications did this article mention?",
+        "answer": "All of the Above",
+        "choices": [{
+          "text": "Yearly dilated eye examinations"
+        }, {
+          "text": "Foot examinations at each visit"
+        }, {
+          "text": "Statin Therapy"
+        }, {
+          "text": "All of the Above", "answer": "yes"
+        }
+        ]
+      }
+    }, {
+      "id": 7,
+      "name": "Standards of Care",
+      "shortname": "Activity ID 7",
+      "url": "http://www.cdc.gov/pcd/issues/2012/11_0313.htm",
+      "eval": "The objective for this learning activity is to be able to examine type II diabetes guideline updates and their impact on clinical practice.",
+      "review-question": {
+        "type": "tf",
+        "stem": "A pre-meal glucose target is 80-130 mg/dL versus the older target of 70-130 mg/dL.",
+        "answer": "F"
+      }
+    }, {
+      "id": 8,
+      "name": "Nutrition in Patients with Diabetes",
+      "shortname": "Activity ID 8",
+      "url": "http://emedicine.medscape.com/article/2049455-overview#aw2aab6b3",
+      "eval": "The objective for this learning activity is to be able develop safe and effective care plans for patients with type II diabetes.",
+      "review-question": {
+        "type": "tf",
+        "stem": "The “Mediterranean Diet” may be a good option for diabetic patients.",
+        "answer": "F"
+      }
+    }, {
+      "id": 9,
+      "name": "Critical Issues in Diabetes: Choosing Newer Drugs for Type 2 Diabetes",
+      "shortname": "Activity ID 9",
+      "url": "http://www.cdc.gov/chronicdisease/overview/index.htm",
+      "is_complete": "true",
+      "eval": "The objective for this learning activity is to be able develop safe and effective care plans for patients with type II diabetes.",
+      "review-question": {
+        "type": "tf",
+        "stem": "DPP-4 Inhibitors may be used with dose modifications in patients with renal disease.",
+        "answer": "False"
+      }
+    }]
+  }, {
+    "id": 1006,
+    "name": "Diabetic Neuropathy",
+    "goal": "The goal of this activity is to provide information on the pathophysiology, diagnosis, treatment and nursing interventions for patients with diabetic neuropathy.",
+    "version": 1
+  }, {
+    "id": 1017,
+    "name": "Footcare for Diabetes"
+  }, {
+    "id": 1018,
+    "name": "Blood Sugar Control with Diabetes Education",
+    "status": "4/5",
+    "complete" : 4
+  }, {
+    "id": 1019,
+    "name": "Ketosis and Exercise"
+  }, {
+    "id": 1021,
+    "name": "A1c testing"
+  }, {
+    "id": 1022,
+    "name": "Diabetes Symptoms in Infants, Toddlers and Adolescents"
+  }, {
+    "id": 1023,
+    "name": "Nutrition for Diabetes"
+  }, {
+    "id": 1024,
+    "name": "Diabetes Vision Care",
+    "status": "1/5",
+    "complete" : 1
+  }, {
+    "id": 1025,
+    "name": "Complications of Diabetes"
+  }, {
+    "id": 1026,
+    "name": "Heart Risks from Diabetes",
+    "status": "3/5",
+    "complete" : 3
+  }, {
+    "id": 1027,
+    "name": "Pre-Diabetes"
+  }, {
+    "id": 1028,
+    "name": "Gestational Diabetes"
+  }
+]

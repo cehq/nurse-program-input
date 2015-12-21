@@ -62,11 +62,25 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
     },
 
     getPrograms: function() {
-      return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+        //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
+        // DEV - Get data from MOCK data
+        return $http.get('data/programs.json');
     },
 
     getProgram: function(id) {
-      return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/' + id);
+      //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/' + id);
+
+        return $http.get('data/programs.json').then(function (data) {
+            //alert(JSON.stringify(data));
+            var programs = data.data;
+            for (i = 0; i < programs.length; i++) {
+                if (programs[i].id == id) {
+                    var programData = {data:programs[i] }
+                    return programData;
+                }
+            }
+        });
     }
   };
 
