@@ -63,7 +63,16 @@
                               ng-value="{{program['learning-activities'][$index]['review-question'].stem}}"> </textarea>
                 </div>
 
-                <div>
+                <div ng-init="qType[{{$index}}]='choice'" >
+                    <h5>Question Type</h5>
+                    <input type="radio" name="qType[{{$index}}]" ng-model="program['learning-activities'][$index]['review-question'].type"
+                           value="choice" >Multiple Choice</input>
+                    <input type="radio" name="qType[{{$index}}]" ng-model="program['learning-activities'][$index]['review-question'].type"
+                           value="tf" >True/False</input>
+                </div>
+
+                <div ng-show="program['learning-activities'][$index]['review-question'].type == 'choice'">
+                    <div>Select the correct answer with the radio button on the left</div>
                     <div>
                         <span><p>Choice #1 <span ng-show="choice.data == 1" class="right-answer">(correct)</span></p>
                             <input type="radio" name="isAnswer" ng-model="choice.data" ng-value="1" />
@@ -87,6 +96,19 @@
                             <input class="default-input-field" type="text"
                                    ng-model="program['learning-activities'][$index]['review-question'].choices[3].text"
                                    ng-value="{{activity.url}}"/></span>
+                    </div>
+
+
+                </div>
+                <div ng-show="program['learning-activities'][$index]['review-question'].type == 'tf'">
+                    <div>Select the correct answer</div>
+                    <div>
+                        <span>
+                            <input type="radio" name="tfIsAnswer[{{$index}}]"
+                                   ng-model="program['learning-activities'][$index]['review-question'].answer" value="true">True</input>
+                            <input type="radio" name="tfIsAnswer[{{$index}}]"
+                                   ng-model="program['learning-activities'][$index]['review-question'].answer" value="false">False</input>
+                        </span>
                     </div>
 
 
