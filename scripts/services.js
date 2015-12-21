@@ -63,6 +63,10 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
 
     getPrograms: function() {
       return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+    },
+
+    getProgram: function(id) {
+      return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/' + id);
     }
   };
 

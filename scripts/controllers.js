@@ -91,9 +91,17 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 
 });
 
-cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location) {
+cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, server) {
 
-  $scope.program = { "id" : "", "name" : ""  };
+  var id = $routeParams.id;
+  if(id) {
+    server.getProgram(id).then(function (program) {
+      console.log("InputFormCtrl: " + id);
+      $scope.program = program.data;
+      $scope.programName
+    });
+  }
+  //$scope.program = { "id" : "", "name" : ""  };
 
   $scope.goToProgramView = function ( path ) {
     $location.path( path );
@@ -122,11 +130,14 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location) 
 
 cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
 
-  $scope.goToProgramInput = function ( path ) {
-    $location.path( path );
+  $scope.goToProgramInput = function (  ) {
+    var selectedProgram =  $scope.draftItems;
+    if (selectedProgram) {
+      $location.path("programinput/" + selectedProgram);
+    } else {
+      $location.path("programinput");
+    }
   };
-
-
 
   // on page load, send request for program list
   $scope.$on('$viewContentLoaded', function() {

@@ -23,6 +23,10 @@ cehqApp.config(['$routeProvider',
           templateUrl: 'views/contact.html',
         }).
         when('/programinput', {
+            templateUrl: 'views/programinput.html',
+            controller:  'InputFormCtrl',
+        }).
+        when('/programinput/:id', {
           templateUrl: 'views/programinput.html',
           controller:  'InputFormCtrl',
         }).
