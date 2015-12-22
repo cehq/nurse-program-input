@@ -9,8 +9,9 @@
         <div class="program-list" ng-controller="ViewFormCtrl">
             <h3>Draft Program List</h3>
             <h1></h1>
-            <select style="width: 100%;" ng-dblclick="goToProgramInput()" class="text-center" size="10" ng-model="draftItems" multiple
-                    ng-multiple="true"
+            <select
+                    style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="draftItems"
+
                     ng-options="el.id as el.name for el in draftPrograms"></select>
         </div>
 
@@ -20,9 +21,8 @@
         <div class="program-list"  ng-controller="ViewFormCtrl">
             <h3>Submitted Program List</h3>
             <h1></h1>
-            <select style="width: 100%;" ng-dblclick="goToProgramInput()" class="text-center" size="10" ng-model="submittedItems" multiple
-                    ng-multiple="true"
-                    ng-options=""></select>
+            <select style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="submittedItems"
+                    ng-options="el.id as el.name for el in submittedPrograms"></select>
         </div>
 
         <input class="program-filter-input-field" type="search" placeholder="Search..." />
@@ -31,9 +31,8 @@
         <div class="program-list" ng-controller="ViewFormCtrl">
             <h3>Accepted Program List</h3>
             <h1></h1>
-            <select style="width: 100%;" ng-dblclick="goToProgramInput()" class="text-center" size="10" ng-model="acceptedItems" multiple
-                    ng-multiple="true"
-                    ng-options=""></select>
+            <select style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="acceptedItems"
+                    ng-options="el.id as el.name for el in acceptedPrograms"></select>
         </div>
 
         <input class="program-filter-input-field" placeholder="Search..." />

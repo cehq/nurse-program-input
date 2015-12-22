@@ -3,6 +3,7 @@
     "name": "Care of Patient with Type II Diabetes",
     "status": "2/5",
     "complete" : 2,
+    "program_status" : "accepted",
     "goal": "The goal of the Learning Activities in this Program is to provide information on best practices in the nursing care of persons with Type II diabetes to understand the pathophysiology, treatment, and nursing interventions for patients with Type II diabetes.",
     "version": 1,
     "objectives": [{
@@ -84,6 +85,7 @@
     "name": "Insulin Injection Sites",
     "status": "1/5",
     "complete" : 1,
+    "program_status" : "accepted",
     "goal": "The goal of the Learning Activities in this Program is to provide information on Insulin Injection Sites.",
     "objectives": [{
       "objective": "Describe the Insulin Injection Sites"
@@ -167,45 +169,57 @@
     "id": 1006,
     "name": "Diabetic Neuropathy",
     "goal": "The goal of this activity is to provide information on the pathophysiology, diagnosis, treatment and nursing interventions for patients with diabetic neuropathy.",
-    "version": 1
+    "version": 1,
+    "program_status" : "accepted"
   }, {
     "id": 1017,
-    "name": "Footcare for Diabetes"
+    "name": "Footcare for Diabetes",
+    "program_status" : "submitted"
   }, {
     "id": 1018,
     "name": "Blood Sugar Control with Diabetes Education",
     "status": "4/5",
-    "complete" : 4
+    "complete" : 4,
+    "program_status" : "accepted"
   }, {
     "id": 1019,
-    "name": "Ketosis and Exercise"
+    "name": "Ketosis and Exercise",
+    "program_status" : "draft"
   }, {
     "id": 1021,
-    "name": "A1c testing"
+    "name": "A1c testing",
+    "program_status" : "draft"
   }, {
     "id": 1022,
-    "name": "Diabetes Symptoms in Infants, Toddlers and Adolescents"
+    "name": "Diabetes Symptoms in Infants, Toddlers and Adolescents",
+    "program_status" : "draft"
   }, {
     "id": 1023,
-    "name": "Nutrition for Diabetes"
+    "name": "Nutrition for Diabetes",
+    "program_status" : "draft"
   }, {
     "id": 1024,
     "name": "Diabetes Vision Care",
     "status": "1/5",
-    "complete" : 1
+    "complete" : 1,
+    "program_status" : "submitted"
   }, {
     "id": 1025,
-    "name": "Complications of Diabetes"
+    "name": "Complications of Diabetes",
+    "program_status" : "draft"
   }, {
     "id": 1026,
     "name": "Heart Risks from Diabetes",
     "status": "3/5",
-    "complete" : 3
+    "complete" : 3,
+    "program_status" : "accepted"
   }, {
     "id": 1027,
-    "name": "Pre-Diabetes"
+    "name": "Pre-Diabetes",
+    "program_status" : "draft"
   }, {
     "id": 1028,
-    "name": "Gestational Diabetes"
+    "name": "Gestational Diabetes",
+    "program_status" : "draft"
   }
 ]
