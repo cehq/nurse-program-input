@@ -135,8 +135,16 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
 
 
-  $scope.goToProgramInput = function (  ) {
+  $scope.goToProgramInput = function (programType) {
     var selectedProgram =  $scope.draftItems;
+    if (programType == 'new') {
+      selectedProgram = null;
+    } else if (programType == 'submitted') {
+      selectedProgram =  $scope.submittedItems;
+    } else if (programType == 'accepted') {
+      selectedProgram =  $scope.acceptedItems;
+    }
+
     if (selectedProgram) {
       $location.path("programinput/" + selectedProgram);
     } else {
