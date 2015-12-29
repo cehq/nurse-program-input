@@ -12,7 +12,7 @@
             <select
                     style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="draftItems"
 
-                    ng-options="el.id as el.name for el in draftPrograms | filter:queryDraft:false"></select>
+                    ng-options="el.id as el.name for el in draftPrograms | filter:{ name: queryDraft }"></select>
         </div>
 
         <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="queryDraft" />
@@ -22,7 +22,7 @@
             <h3>Submitted Program List</h3>
             <h1></h1>
             <select style="width: 100%;" ng-dblclick="goToProgramInput('submitted')" size="10" ng-model="submittedItems"
-                    ng-options="el.id as el.name for el in submittedPrograms | filter:querySubmitted"></select>
+                    ng-options="el.id as el.name for el in submittedPrograms | filter:{ name: querySubmitted }"></select>
         </div>
 
         <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="querySubmitted" />
@@ -32,7 +32,7 @@
             <h3>Accepted Program List</h3>
             <h1></h1>
             <select style="width: 100%;" ng-dblclick="goToProgramInput('accepted')" size="10" ng-model="acceptedItems"
-                    ng-options="el.id as el.name for el in acceptedPrograms | filter:queryAccepted"></select>
+                    ng-options="el.id as el.name for el in acceptedPrograms | filter:{ name: queryAccepted }"></select>
         </div>
 
         <input class="program-filter-input-field" placeholder="Search..." ng-model="queryAccepted" />
