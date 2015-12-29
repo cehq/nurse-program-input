@@ -68,6 +68,55 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
         return $http.get('data/programs.json');
     },
 
+      getDraftPrograms: function() {
+          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
+          // DEV - Get data from MOCK data
+          return $http.get('data/programs.json').then(function (data) {
+              var programs = data.data;
+              var retPrograms = {data:[]};
+              for (i = 0; i < programs.length; i++) {
+                  if (programs[i].program_status === "draft") {
+                      retPrograms.data.push(programs[i]);
+                  }
+              }
+              return retPrograms;
+          });
+      },
+
+      getSubmittedPrograms: function() {
+          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
+          // DEV - Get data from MOCK data
+          return $http.get('data/programs.json').then(function (data) {
+              var programs = data.data;
+              var retPrograms = {data:[]};
+              for (i = 0; i < programs.length; i++) {
+                  if (programs[i].program_status === "submitted") {
+                      retPrograms.data.push(programs[i]);
+                  }
+              }
+              return retPrograms;
+          });
+      },
+
+      getAcceptedPrograms: function() {
+          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
+          // DEV - Get data from MOCK data
+          return $http.get('data/programs.json').then(function (data) {
+              var programs = data.data;
+              var retPrograms = {data:[]};
+              for (i = 0; i < programs.length; i++) {
+
+                  if (programs[i].program_status === "accepted") {
+                      retPrograms.data.push(programs[i]);
+                  }
+              }
+              return retPrograms;
+          });
+      },
+
     getProgram: function(id) {
       //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/' + id);
 

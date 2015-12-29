@@ -98,8 +98,14 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     server.getProgram(id).then(function (program) {
       console.log("InputFormCtrl: " + id);
       $scope.program = program.data;
+      if(!$scope.program.objectives) {
+        $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
+      }
+      if(!$scope.program['learning-activities']) {
+        $scope.program['learning-activities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
+      }
     });
-  } else {
+  } else {// NEW Program, set defaults
     $scope.program = { "id" : "", "name" : ""  };
     $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
     $scope.program['learning-activities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
@@ -121,7 +127,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
   }
   
   $scope.sendPost = function() {
-    $scope.createJSON()
+    $scope.createJSON();
     $http.post("http://52.32.118.8:8080/CEHQWebServices/programs", $scope.program).success(function(data) {
       console.log("sent data" + $scope.program.name);
       $scope.clearForm();
@@ -144,7 +150,7 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, s
     } else if (programType == 'accepted') {
       selectedProgram =  $scope.acceptedItems;
     }
-
+    console.log("selectedProgram: " + selectedProgram);
     if (selectedProgram) {
       $location.path("programinput/" + selectedProgram);
     } else {
@@ -157,17 +163,17 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, s
     // JMS TODO: Not sure about this....retrieve each group draft/submitted/accepted
     // or retrieve all at one time. Either way, programs need to be filtered so they
     // are placed in the correct SELECT list.
-    server.getPrograms("draft").then(function(programs) {
+    server.getDraftPrograms().then(function(programs) {
       //alert(JSON.stringify(programs));
       $scope.draftPrograms = programs.data; //.reverse();
       $scope.draftItems = $scope.draftPrograms[0].id;
     });
-    server.getPrograms("submitted").then(function(programs) {
+    server.getSubmittedPrograms().then(function(programs) {
       //alert(JSON.stringify(programs));
       $scope.submittedPrograms = programs.data; //.reverse();
       $scope.submittedItems = $scope.submittedPrograms[0].id;
     });
-    server.getPrograms("accepted").then(function(programs) {
+    server.getAcceptedPrograms().then(function(programs) {
       //alert(JSON.stringify(programs));
       $scope.acceptedPrograms = programs.data; //.reverse();
       $scope.acceptedItems = $scope.acceptedPrograms[0].id;
