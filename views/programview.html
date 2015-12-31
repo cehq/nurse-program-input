@@ -1,41 +1,32 @@
 <!doctype html>
 
     <h2>Programs View</h2>
-
+ 
     <form class="program-form" ng-controller="ViewFormCtrl">
 
         <button class="go-to-program-input-button" ng-click="goToProgramInput('new')" type="submit" >New Program</button>
 
+        <h3>Draft Program List</h3>
+        <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="queryDraft" />
         <div class="program-list" ng-controller="ViewFormCtrl">
-            <h3>Draft Program List</h3>
-            <h1></h1>
-            <select
-                    style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="draftItems"
-
+            <select style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="draftItems"
                     ng-options="el.id as el.name for el in draftPrograms | filter:{ name: queryDraft }"></select>
         </div>
 
-        <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="queryDraft" />
-
-
+        <h3>Submitted Program List</h3>
+        <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="querySubmitted" />
         <div class="program-list"  ng-controller="ViewFormCtrl">
-            <h3>Submitted Program List</h3>
-            <h1></h1>
             <select style="width: 100%;" ng-dblclick="goToProgramInput('submitted')" size="10" ng-model="submittedItems"
                     ng-options="el.id as el.name for el in submittedPrograms | filter:{ name: querySubmitted }"></select>
         </div>
 
-        <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="querySubmitted" />
-
-
+        <h3>Accepted Program List</h3>
+        <input class="program-filter-input-field" placeholder="Search..." ng-model="queryAccepted" />
         <div class="program-list" ng-controller="ViewFormCtrl">
-            <h3>Accepted Program List</h3>
-            <h1></h1>
             <select style="width: 100%;" ng-dblclick="goToProgramInput('accepted')" size="10" ng-model="acceptedItems"
                     ng-options="el.id as el.name for el in acceptedPrograms | filter:{ name: queryAccepted }"></select>
         </div>
 
-        <input class="program-filter-input-field" placeholder="Search..." ng-model="queryAccepted" />
 
     </form>
 

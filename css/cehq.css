@@ -74,7 +74,7 @@ h2 {
 }
 
 h3 {
-  padding-top: 7%;
+  padding-top: 14px;
 }
 
 .main-article {
@@ -170,7 +170,7 @@ iframe {
   width:90%;
   background-color: lightgray;
   border: 1px solid white;
-  margin: 50px auto 0;
+  margin: 20px auto 0;
   padding: 1em;
   text-align: center;
 }
@@ -212,7 +212,7 @@ iframe {
   font-style:normal;
   font-weight:normal;
   font-family:"Open Sans";
-  font-size:14px;
+  font-size:22px;
   outline:none;
   color:#fff;
   border:none;
@@ -310,6 +310,16 @@ h3.accordion{
   margin: 1px 0;
 }
 
+.left {
+  text-align: left;
+}
+
+.question-type {
+  width: 30%;
+  padding-left: 40px;
+  text-align: center;
+  margin: 0 auto;
+}
 /*************************************/
 
 @media screen and (max-width: 767px) {
@@ -358,5 +368,10 @@ h3.accordion{
     margin-left: -10%;
   }
 
+  .question-type {
+    width: 50%;
+    padding-left: 40px;
+    text-align: center;
+    margin: 0 auto;
+  }
 }
-

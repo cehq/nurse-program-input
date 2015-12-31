@@ -59,16 +59,21 @@
                 <div>
                     <h5>Learning Assignment Question:</h5>
                     <textarea rows="3" class="default-input-field"
+                              ng-init=""
                               ng-model="program['learning-activities'][$index]['review-question'].stem"
                               ng-value="{{program['learning-activities'][$index]['review-question'].stem}}"> </textarea>
+                    <p ng-show="program['learning-activities'][$index]['review-question'].stem.length <= 128">{{128 - program['learning-activities'][$index]['review-question'].stem.length}} chars remaining</p>
+                    <p ng-show="program['learning-activities'][$index]['review-question'].stem.length > 128">{{128 - program['learning-activities'][$index]['review-question'].stem.length}} over the limit</p>
                 </div>
 
                 <div ng-init="qType[{{$index}}]='choice'" >
                     <h5>Question Type</h5>
-                    <input type="radio" name="qType[{{$index}}]" ng-model="program['learning-activities'][$index]['review-question'].type"
-                           value="choice" >Multiple Choice</input>
-                    <input type="radio" name="qType[{{$index}}]" ng-model="program['learning-activities'][$index]['review-question'].type"
-                           value="tf" >True/False</input>
+                    <div class="question-type">
+                        <div class="left"><input type="radio" name="qType[{{$index}}]" ng-model="program['learning-activities'][$index]['review-question'].type"
+                               value="choice" >Multiple Choice</input></div>
+                        <div class="left"><input type="radio" name="qType[{{$index}}]" ng-model="program['learning-activities'][$index]['review-question'].type"
+                               value="tf" >True/False</input></div>
+                    </div>
                 </div>
 
                 <div ng-show="program['learning-activities'][$index]['review-question'].type == 'choice'">
