@@ -182,14 +182,12 @@ iframe {
   margin: 0 auto;
 }
 
-.send-program-button{
-  display:block;
+.program-button {
   width:15%;
-  position:relative;
   font-style:normal;
   font-weight:normal;
   font-family:"Open Sans";
-  font-size:14px;
+  font-size: 24px;
   outline:none;
   color:#fff;
   border:none;
@@ -205,6 +203,10 @@ iframe {
   margin-top: 2%;
   left: 57%;
 }
+.delete-program-button {
+  background-color: red;
+}
+
 .go-to-program-input-button{
   display:block;
   width:15%;
@@ -270,15 +272,31 @@ iframe {
 }
 
 .program-name-input-field{
-  margin-top:8%;
-  display:inline-block;
-  width: 45%;
+  margin-top: 3%;
+  /*display:inline-block;
+  width: 45%;*/
 }
 
 .default-input-field{
   margin-bottom: 1%;
   display:inline-block;
   width: 45%;
+}
+.question-input-field {
+  margin-bottom: 0%;
+  display:inline-block;
+  width: 45%;
+}
+.chars-remain {
+  color: darkgrey;
+}
+.over-char-limit {
+  color: red;
+  font-weight: bold;
+}
+
+div.answer-area {
+  padding-top: 12px;
 }
 
 .program-filter-input-field{
@@ -313,6 +331,9 @@ h3.accordion{
 .left {
   text-align: left;
 }
+#question-type-section {
+  padding-top: 10px;
+}
 
 .question-type {
   width: 30%;
@@ -323,6 +344,23 @@ h3.accordion{
 
 #program-keywords .default-input-field {
   margin-bottom: 0%;
+}
+
+.program-status  {
+  text-transform: uppercase;
+  font-size: 36px;
+}
+.program-status.draft {
+  opacity: 0.4;
+  color: crimson;
+}
+.program-status.submitted {
+  opacity: 0.4;
+  color: deepskyblue;
+}
+.program-status.accepted {
+  opacity: 0.4;
+  color: darkgreen;
 }
 /*************************************/
 

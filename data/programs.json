@@ -25,8 +25,9 @@
         "choices": [
           {  "text": "Metformin" },
           {  "text": "Beta-Blockers"},
-          {  "text": "Insulin", "answer": "yes"}
-        ]
+          {  "text": "Insulin"}
+        ],
+        "answer":"1"
       }
     }, {
       "id": 2,
