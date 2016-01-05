@@ -320,6 +320,10 @@ h3.accordion{
   text-align: center;
   margin: 0 auto;
 }
+
+#program-keywords .default-input-field {
+  margin-bottom: 0%;
+}
 /*************************************/
 
 @media screen and (max-width: 767px) {

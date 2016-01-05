@@ -125,7 +125,12 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
   $scope.createJSON = function () {
     $scope.program.name = $scope.programName;
   }
-  
+
+  $scope.keywordCount = function (text) {
+    var s = text ? text.split(/[^,\s][^\,]*[^,\s]*/) : 0;
+    return s ? s.length-1 : 0;
+  };
+
   $scope.sendPost = function() {
     $scope.createJSON();
     $http.post("http://52.32.118.8:8080/CEHQWebServices/programs", $scope.program).success(function(data) {

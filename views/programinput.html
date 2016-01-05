@@ -10,12 +10,12 @@
         </div>
 
         <div>
-            <h5 class="program-name-input-field">Program Name:</h5>
+            <h4 class="program-name-input-field">Program Name:</h4>
             <input class="default-input-field" type="text" id="programNameInputBox" ng-model="program.name" />
         </div>
 
         <div>
-            <h5>Objectives:</h5>
+            <h4>Objectives:</h4>
             <!-- <input class="default-input-field" type="text" id="" ng-model="" />-->
             <ul class="list-unstyled">
                 <li ng-repeat="objItem in program.objectives track by $index">
@@ -28,13 +28,14 @@
 
         </div>
 
-        <div>
-            <h5>Keywords (separated by commas):</h5>
-            <input class="default-input-field" type="text" ng-model="" />
+        <div id="program-keywords">
+            <h4>Keywords (separated by commas):</h4>
+            <input class="default-input-field" type="text" ng-model="program.keywords" />
+            <div class="total count">Total Keywords: <span ng-bind="keywordCount(program.keywords)"></span></div>
         </div>
 
         <div>
-            <h5>Goal:</h5>
+            <h4>Goal:</h4>
             <textarea rows="4" class="default-input-field" id="" ng-model="program.goal"> </textarea>
         </div>
 

@@ -184,7 +184,8 @@
   }, {
     "id": 1019,
     "name": "Ketosis and Exercise",
-    "program_status" : "draft"
+    "program_status" : "draft",
+    "keywords": "ketosis,exercise"
   }, {
     "id": 1021,
     "name": "A1c testing",
