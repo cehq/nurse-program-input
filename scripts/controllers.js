@@ -116,8 +116,8 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
   }
 
 
-  $scope.goToProgramView = function ( path ) {
-    $location.path( path );
+  $scope.goToProgramView = function (  ) {
+    $location.path( '/programview' );
   };
 
   $scope.clearForm = function () {
@@ -145,89 +145,78 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     });
   };
 
-  $scope.saveDraft = function() {
+  $scope.cehqModal = function(name) {
     $scope.modalInstance = $modal.open({
-      templateUrl: 'modals/saveDraft.html',
+      templateUrl: 'modals/' + name + '.html',
+      controller: 'ModalCtrl',
       size: 's',
-      scope: $scope
+      scope: $scope,
+      resolve: {
+        program: function () {
+          return $scope.program;
+        }
+      }
     });
   };
+
+});
+
+cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInstance, server, program) {
+  $scope.program = program;
+  $scope.id = $scope.program.id;
+
   $scope.saveDraftOk = function () {
     // TODO: Now SAVE and then do something
-    $scope.modalInstance.close();
+    $modalInstance.close();
+    $scope.goToProgramView();
   };
-  $scope.submitDraft = function() {
-    $scope.modalInstance = $modal.open({
-      templateUrl: 'modals/submitDraft.html',
-      size: 's',
-      scope: $scope
-    });
-  };
-  $scope.acceptProgram = function() {
-    $scope.modalInstance = $modal.open({
-      templateUrl: 'modals/acceptProgram.html',
-      size: 's',
-      scope: $scope
-    });
-  };
-  $scope.unpublishProgram = function() {
-    $scope.modalInstance = $modal.open({
-      templateUrl: 'modals/unpublishProgram.html',
-      size: 's',
-      scope: $scope
-    });
-  };
+
   $scope.submitDraftOk = function () {
     // TODO: Now SAVE and then do something
-    $scope.modalInstance.close();
+    $modalInstance.close();
 
-    if($scope.pid) { // Editing a previous Draft
-      server.submitProgram(id, $scope.program).then(function (program) {
+    if($scope.id) { // Editing a previous Draft
+      server.submitProgram($scope.id, $scope.program).then(function (program) {
         console.log("submitProgram complete");
-        //$scope.program = program.data;
+        $scope.goToProgramView();
       });
     } else { // Submitting a NEW Draft, not yet saved
-      $scope.modalInstance = $modal.open({
+      $modalInstance = $modal.open({
         template: 'Not yet implemented for NEW Drafts <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>',
         scope: $scope
       });
     }
-
   };
+
   $scope.acceptProgramOk = function () {
     // TODO: Now SAVE and then do something
-    $scope.modalInstance.close();
+    $modalInstance.close();
 
-    server.acceptProgram(id, $scope.program).then(function (program) {
+    server.acceptProgram($scope.id, $scope.program).then(function (program) {
       //$scope.program.program_status = "submitted";
       console.log("acceptProgramOk complete");
-      $scope.goToProgramView('/programview');
+      $scope.goToProgramView();
     });
 
   };
   $scope.unpublishProgramOk = function () {
     // TODO: Now SAVE and then do something
-    $scope.modalInstance.close();
+    $modalInstance.close();
 
-    server.unpublishProgram(id, $scope.program).then(function (program) {
+    server.unpublishProgram($scope.id, $scope.program).then(function (program) {
       //$scope.program.program_status = "submitted";
       console.log("unpublishProgramOk complete");
-      $scope.goToProgramView('/programview');
+      $scope.goToProgramView();
     });
 
   };
 
   $scope.cancel = function () {
     // Don't Save
-    $scope.modalInstance.dismiss('cancel');
+    $modalInstance.dismiss('cancel');
   };
-
-
 });
 
-cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInstance, server) {
-
-});
 cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
 
 

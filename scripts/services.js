@@ -72,24 +72,22 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
       getDraftPrograms: function() {
           //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
 
-          // DEV
 
+          // DEV - Get data from MOCK data
+          return $http.get('data/programs.json').then(function (data) {
+              if (!programData) {
+                  programData = data.data;
+              }
 
-              // DEV - Get data from MOCK data
-              return $http.get('data/programs.json').then(function (data) {
-                  if (!programData) {
-                      programData = data.data;
+              var programs = programData;
+              var retPrograms = {data: []};
+              for (i = 0; i < programs.length; i++) {
+                  if (programs[i].program_status === "draft") {
+                      retPrograms.data.push(programs[i]);
                   }
-
-                  var programs = programData;
-                  var retPrograms = {data: []};
-                  for (i = 0; i < programs.length; i++) {
-                      if (programs[i].program_status === "draft") {
-                          retPrograms.data.push(programs[i]);
-                      }
-                  }
-                  return retPrograms;
-              });
+              }
+              return retPrograms;
+          });
 
 
       },
