@@ -1,7 +1,8 @@
 var cehqServices = angular.module('cehq.services', []);
+var programData = null;
 
 // all server access is now abstracted in the 'server' object
-cehqServices.factory('server', function( messages, appConstants, $http ){
+cehqServices.factory('server', function( messages, appConstants, $http, $q ){
 
   return {
 
@@ -71,17 +72,26 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
       getDraftPrograms: function() {
           //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
 
-          // DEV - Get data from MOCK data
-          return $http.get('data/programs.json').then(function (data) {
-              var programs = data.data;
-              var retPrograms = {data:[]};
-              for (i = 0; i < programs.length; i++) {
-                  if (programs[i].program_status === "draft") {
-                      retPrograms.data.push(programs[i]);
+          // DEV
+
+
+              // DEV - Get data from MOCK data
+              return $http.get('data/programs.json').then(function (data) {
+                  if (!programData) {
+                      programData = data.data;
                   }
-              }
-              return retPrograms;
-          });
+
+                  var programs = programData;
+                  var retPrograms = {data: []};
+                  for (i = 0; i < programs.length; i++) {
+                      if (programs[i].program_status === "draft") {
+                          retPrograms.data.push(programs[i]);
+                      }
+                  }
+                  return retPrograms;
+              });
+
+
       },
 
       getSubmittedPrograms: function() {
@@ -89,7 +99,10 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
 
           // DEV - Get data from MOCK data
           return $http.get('data/programs.json').then(function (data) {
-              var programs = data.data;
+              if (!programData) {
+                  programData = data.data;
+              }
+              var programs = programData;
               var retPrograms = {data:[]};
               for (i = 0; i < programs.length; i++) {
                   if (programs[i].program_status === "submitted") {
@@ -105,7 +118,10 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
 
           // DEV - Get data from MOCK data
           return $http.get('data/programs.json').then(function (data) {
-              var programs = data.data;
+              if (!programData) {
+                  programData = data.data;
+              }
+              var programs = programData;
               var retPrograms = {data:[]};
               for (i = 0; i < programs.length; i++) {
 
@@ -121,16 +137,65 @@ cehqServices.factory('server', function( messages, appConstants, $http ){
       //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/' + id);
 
         return $http.get('data/programs.json').then(function (data) {
-            //alert(JSON.stringify(data));
-            var programs = data.data;
+            if (!programData) {
+                programData = data.data;
+            }
+            var programs = programData;
             for (i = 0; i < programs.length; i++) {
                 if (programs[i].id == id) {
-                    var programData = {data:programs[i] }
-                    return programData;
+                    var retProgram = {data:programs[i] }
+                    return retProgram;
                 }
             }
         });
-    }
+    },
+      submitProgram: function(id, program) {
+
+          // FOR DEV ONLY
+          var deferred = $q.defer();
+
+          for (i = 0; i < programData.length; i++) {
+
+              if (programData[i].id == id) {
+                  console.log("SVC submitProgram; found status: " + programData[i].program_status);
+                  programData[i].program_status = "submitted";
+              }
+          }
+          deferred.resolve(program);
+          return deferred.promise;
+      },
+
+      acceptProgram: function(id, program) {
+
+          // FOR DEV ONLY
+          var deferred = $q.defer();
+
+          for (i = 0; i < programData.length; i++) {
+
+              if (programData[i].id == id) {
+                  console.log("SVC acceptProgram; found status: " + programData[i].program_status);
+                  programData[i].program_status = "accepted";
+              }
+          }
+          deferred.resolve(program);
+          return deferred.promise;
+      },
+
+      unpublishProgram: function(id, program) {
+
+          // FOR DEV ONLY
+          var deferred = $q.defer();
+
+          for (i = 0; i < programData.length; i++) {
+
+              if (programData[i].id == id) {
+                  console.log("SVC unpublishProgram; found status: " + programData[i].program_status);
+                  programData[i].program_status = "submitted";
+              }
+          }
+          deferred.resolve(program);
+          return deferred.promise;
+      }
   };
 
 });

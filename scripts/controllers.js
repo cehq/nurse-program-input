@@ -94,7 +94,9 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, $modal, server) {
 
   var id = $routeParams.id;
+
   if(id) {
+    $scope.pid = id;
     server.getProgram(id).then(function (program) {
       console.log("InputFormCtrl: " + id);
       $scope.program = program.data;
@@ -178,7 +180,43 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
   $scope.submitDraftOk = function () {
     // TODO: Now SAVE and then do something
     $scope.modalInstance.close();
+
+    if($scope.pid) { // Editing a previous Draft
+      server.submitProgram(id, $scope.program).then(function (program) {
+        console.log("submitProgram complete");
+        //$scope.program = program.data;
+      });
+    } else { // Submitting a NEW Draft, not yet saved
+      $scope.modalInstance = $modal.open({
+        template: 'Not yet implemented for NEW Drafts <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>',
+        scope: $scope
+      });
+    }
+
   };
+  $scope.acceptProgramOk = function () {
+    // TODO: Now SAVE and then do something
+    $scope.modalInstance.close();
+
+    server.acceptProgram(id, $scope.program).then(function (program) {
+      //$scope.program.program_status = "submitted";
+      console.log("acceptProgramOk complete");
+      $scope.goToProgramView('/programview');
+    });
+
+  };
+  $scope.unpublishProgramOk = function () {
+    // TODO: Now SAVE and then do something
+    $scope.modalInstance.close();
+
+    server.unpublishProgram(id, $scope.program).then(function (program) {
+      //$scope.program.program_status = "submitted";
+      console.log("unpublishProgramOk complete");
+      $scope.goToProgramView('/programview');
+    });
+
+  };
+
   $scope.cancel = function () {
     // Don't Save
     $scope.modalInstance.dismiss('cancel');
@@ -187,6 +225,9 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 
 });
 
+cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInstance, server) {
+
+});
 cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
 
 
