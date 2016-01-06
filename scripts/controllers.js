@@ -91,7 +91,7 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 
 });
 
-cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, server) {
+cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, $modal, server) {
 
   var id = $routeParams.id;
   if(id) {
@@ -141,7 +141,36 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
       // GOTO top of page
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
-  }
+  };
+
+  $scope.saveDraft = function() {
+    $scope.modalInstance = $modal.open({
+      templateUrl: 'modals/saveDraft.html',
+      size: 's',
+      scope: $scope
+    });
+  };
+  $scope.saveDraftOk = function () {
+    // TODO: Now SAVE and then do something
+    $scope.modalInstance.close();
+  };
+  $scope.submitDraft = function() {
+    $scope.modalInstance = $modal.open({
+      templateUrl: 'modals/submitDraft.html',
+      size: 's',
+      scope: $scope
+    });
+  };
+  $scope.submitDraftOk = function () {
+    // TODO: Now SAVE and then do something
+    $scope.modalInstance.close();
+  };
+  $scope.cancel = function () {
+    // Don't Save
+    $scope.modalInstance.dismiss('cancel');
+  };
+
+
 });
 
 cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {

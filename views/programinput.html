@@ -127,7 +127,7 @@
 
         <button ng-show="program.program_status == 'draft'" class="program-button delete-program-button" ng-click="deleteDraft()" ng-controller="InputFormCtrl" type="submit" >Delete Draft</button>
         <button ng-show="program.program_status == 'draft'" class="program-button draft-program-button" ng-click="saveDraft()" ng-controller="InputFormCtrl" type="submit" >Save Draft</button>
-        <button ng-show="program.program_status == 'draft'" class="program-button submit-program-button" ng-click="submitProgram()" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
+        <button ng-show="program.program_status == 'draft'" class="program-button submit-program-button" ng-click="submitDraft()" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
         <button ng-show="program.program_status == 'submitted'" class="program-button send-program-button" ng-click="acceptProgram()" ng-controller="InputFormCtrl" type="submit" >Accept Program</button>
 
         <div>
