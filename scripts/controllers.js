@@ -161,6 +161,20 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
       scope: $scope
     });
   };
+  $scope.acceptProgram = function() {
+    $scope.modalInstance = $modal.open({
+      templateUrl: 'modals/acceptProgram.html',
+      size: 's',
+      scope: $scope
+    });
+  };
+  $scope.unpublishProgram = function() {
+    $scope.modalInstance = $modal.open({
+      templateUrl: 'modals/unpublishProgram.html',
+      size: 's',
+      scope: $scope
+    });
+  };
   $scope.submitDraftOk = function () {
     // TODO: Now SAVE and then do something
     $scope.modalInstance.close();
