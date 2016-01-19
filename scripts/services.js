@@ -6,6 +6,28 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
 
   return {
 
+    login: function(username, password) {
+      console.log('login');
+      var url = appConstants.BASE_URL + '/service/login';
+
+
+      console.log('signIn: ' + url);
+
+      $http.defaults.headers.common.Authorization = 'Basic ' + btoa(username + ':' + password);
+      $http.defaults.headers.common["Content-Type"] = "application/json";
+
+      return $http.get(url)
+          .then(function successCallback(response) {
+              //alert("success: " + JSON.stringify(response));
+              //alert("success: " + response.data + " ; status: " + response.status +             " ; headers: " + response.headers + " ; config: " + JSON.stringify(response.config));
+
+              return response;
+          }, function errorCallback(response) {
+              alert("error: " + JSON.stringify(response));
+              return response;
+          });
+    },
+
     getSiteCatalog: function( success, failure ) {
 
       var requestURL =

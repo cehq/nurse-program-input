@@ -1,4 +1,4 @@
-var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services']);
+var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories']);
 
 
 cehqControllers.controller('NavBarCtrl', function ($scope,
@@ -52,10 +52,36 @@ cehqControllers.controller('NavBarCtrl', function ($scope,
 
 });
 
-
-cehqControllers.controller('SignInCtrl', function ($scope, $modalInstance) {
+cehqControllers.controller('SignInCtrl', function ($scope, $modalInstance, server, $localstorage, $location) {
 
   console.log('SignInCtrl');
+
+  $scope.vm = {};
+  $scope.vm.username = $localstorage.get("email", "joe-nurse");
+  $scope.vm.password = $localstorage.get("password", "joe1234");
+  $scope.vm.rememberMe = ($localstorage.get("remember_me", "true") === 'true');
+
+  $scope.login = function () {
+    console.log('login');
+    server.login($scope.vm.username ,$scope.vm.password).then(function(userLogin) {
+      console.log('userLogin: ' + JSON.stringify(userLogin));
+      if (userLogin.status === 401) {
+        alert("ERROR - Bad username or password");
+      } else if (userLogin.status === 200) {
+        $localstorage.set("jwt", userLogin.data.jwt);
+
+        $modalInstance.dismiss('login');
+        $location.path( '/programview' );
+
+      } else {
+        alert("error: " + userLogin.data + " ; status: " + userLogin.status +
+            " ; headers: " + userLogin.headers + " ; config: " + JSON.stringify(userLogin.config));
+      }
+
+    });
+
+
+  };
 
   $scope.cancel = function () {
     console.log('cancel');
