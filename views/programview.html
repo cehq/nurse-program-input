@@ -1,32 +1,129 @@
 <!doctype html>
 
     <h2>Programs View</h2>
- 
+
     <form class="program-form" ng-controller="ViewFormCtrl">
 
-        <button class="go-to-program-input-button" ng-click="goToProgramInput('new')" type="submit" >New Program</button>
+        <button class="go-to-program-input-button" ng-click="goToProgramInput()" type="submit" >New Program</button>
 
-        <h3>Draft Program List</h3>
-        <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="queryDraft" />
-        <div class="program-list" ng-controller="ViewFormCtrl">
-            <select style="width: 100%;" ng-dblclick="goToProgramInput()" size="10" ng-model="draftItems"
-                    ng-options="el.id as el.name for el in draftPrograms | filter:{ name: queryDraft }"></select>
+
+        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getDraftPrograms()">
+            <h3>Draft Programs</h3>
+
+                <table st-safe-src="draftTablesItems" st-table="displayedDraftCollection" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th st-sort="name" class="left name">Program Name</th>
+                            <th>Last Updated</th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <input st-search="name" placeholder="search for Draft" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th>
+                                <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedDraftCollection" >
+                        <td class="left name">{{row.name}}</td>
+                        <td>{{row.last_updated}}</td>
+                        <td>
+                            <button ng-click="goToProgramInput(row)" >Edit</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
         </div>
 
-        <h3>Submitted Program List</h3>
-        <input class="program-filter-input-field" type="search" placeholder="Search..." ng-model="querySubmitted" />
-        <div class="program-list"  ng-controller="ViewFormCtrl">
-            <select style="width: 100%;" ng-dblclick="goToProgramInput('submitted')" size="10" ng-model="submittedItems"
-                    ng-options="el.id as el.name for el in submittedPrograms | filter:{ name: querySubmitted }"></select>
+        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getSubmittedPrograms()">
+            <h3>Submitted Programs</h3>
+            <table st-safe-src="submittedTablesItems" st-table="displayedSubmittedCollection" class="table table-striped">
+                <thead>
+                <tr>
+                    <th st-sort="name">Program Name</th>
+                    <th>Last Updated</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="name" placeholder="search for program" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in displayedSubmittedCollection" >
+                    <td class="left">{{row.name}}</td>
+                    <td>{{row.last_updated}}</td>
+                    <td>
+                        <button ng-click="goToProgramInput(row)" >Edit</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
-        <h3>Accepted Program List</h3>
-        <input class="program-filter-input-field" placeholder="Search..." ng-model="queryAccepted" />
-        <div class="program-list" ng-controller="ViewFormCtrl">
-            <select style="width: 100%;" ng-dblclick="goToProgramInput('accepted')" size="10" ng-model="acceptedItems"
-                    ng-options="el.id as el.name for el in acceptedPrograms | filter:{ name: queryAccepted }"></select>
+        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getReviewedPrograms()">
+            <h3>Reviewed Programs</h3>
+            <table st-safe-src="reviewedTablesItems" st-table="displayedReviewedCollection" class="table table-striped">
+                <thead>
+                <tr>
+                    <th st-sort="name">Program Name</th>
+                    <th>Last Updated</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="name" placeholder="search for program" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in displayedReviewedCollection" >
+                    <td class="left">{{row.name}}</td>
+                    <td>{{row.last_updated}}</td>
+                    <td>
+                        <button ng-click="goToProgramInput(row)" >Edit</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
+        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getAcceptedPrograms()">
+            <h3>Accepted Programs</h3>
+            <table st-safe-src="acceptedTablesItems" st-table="displayedAcceptedCollection" class="table table-striped">
+                <thead>
+                <tr>
+                    <th st-sort="name">Program Name</th>
+                    <th>Last Updated</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="name" placeholder="search for program" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in displayedAcceptedCollection" >
+                    <td class="left">{{row.name}}</td>
+                    <td>{{row.last_updated}}</td>
+                    <td>
+                        <button ng-click="goToProgramInput(row)" >View</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
     </form>
 

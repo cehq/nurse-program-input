@@ -1,4 +1,4 @@
-var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories']);
+var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories','smart-table']);
 
 
 cehqControllers.controller('NavBarCtrl', function ($scope,
@@ -246,43 +246,55 @@ cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInsta
 cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
 
 
-  $scope.goToProgramInput = function (programType) {
-    var selectedProgram =  $scope.draftItems;
-    if (programType == 'new') {
-      selectedProgram = null;
-    } else if (programType == 'submitted') {
-      selectedProgram =  $scope.submittedItems;
-    } else if (programType == 'accepted') {
-      selectedProgram =  $scope.acceptedItems;
-    }
-    console.log("selectedProgram: " + selectedProgram);
-    if (selectedProgram) {
-      $location.path("programinput/" + selectedProgram);
+  $scope.goToProgramInput = function (row) {
+    //alert(row.id);
+
+    if (row && row.id) {
+      //console.log("selectedProgram: " + row.id);
+      $location.path("programinput/" + row.id);
     } else {
       $location.path("programinput");
     }
   };
 
-  // on page load, send request for program list
-  $scope.$on('$viewContentLoaded', function() {
-    // JMS TODO: Not sure about this....retrieve each group draft/submitted/accepted
-    // or retrieve all at one time. Either way, programs need to be filtered so they
-    // are placed in the correct SELECT list.
-    server.getDraftPrograms().then(function(programs) {
-      //alert(JSON.stringify(programs));
-      $scope.draftPrograms = programs.data; //.reverse();
-      $scope.draftItems = $scope.draftPrograms[0].id;
-    });
-    server.getSubmittedPrograms().then(function(programs) {
-      //alert(JSON.stringify(programs));
-      $scope.submittedPrograms = programs.data; //.reverse();
-      $scope.submittedItems = $scope.submittedPrograms[0].id;
-    });
-    server.getAcceptedPrograms().then(function(programs) {
-      //alert(JSON.stringify(programs));
-      $scope.acceptedPrograms = programs.data; //.reverse();
-      $scope.acceptedItems = $scope.acceptedPrograms[0].id;
-    });
-  });
+
+    $scope.showMe = function(id){
+        alert(id);
+    };
+
+    $scope.getDraftPrograms = function() {
+        server.getDraftPrograms().then(function (programs) {
+            $scope.draftTablesItems = programs.data; //.reverse();
+            $scope.displayedDraftCollection = [].concat($scope.draftTablesItems);
+        });
+    };
+
+    $scope.getSubmittedPrograms = function() {
+        server.getSubmittedPrograms().then(function (programs) {
+            $scope.submittedTablesItems = programs.data; //.reverse();
+            $scope.displayedSubmittedCollection = [].concat($scope.submittedTablesItems);
+        });
+    };
+
+    $scope.getAcceptedPrograms = function() {
+        server.getAcceptedPrograms().then(function (programs) {
+            $scope.acceptedTablesItems = programs.data; //.reverse();
+            $scope.displayedAcceptedCollection = [].concat($scope.acceptedTablesItems);
+        });
+    };
+
+    $scope.getReviewedPrograms = function() {
+        server.getReviewedPrograms().then(function (programs) {
+            $scope.reviewedTablesItems = programs.data; //.reverse();
+            $scope.displayedReviewedCollection = [].concat($scope.reviewedTablesItems);
+        });
+    };
+
+    $scope.getAcceptedPrograms = function() {
+        server.getAcceptedPrograms().then(function (programs) {
+            $scope.acceptedTablesItems = programs.data; //.reverse();
+            $scope.displayedAcceptedCollection = [].concat($scope.acceptedTablesItems);
+        });
+    };
 
 });
