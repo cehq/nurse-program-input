@@ -6,15 +6,30 @@
 
         <div>
             <button class="back-button" ng-click="goToProgramView('/programview')" type="Button">back</button>
-            <span class="program-status {{program.program_status}}">{{program.program_status}}</span>
+            <span class="program-status">
+                <span class="program-status {{program.program_status}}">{{program.program_status}}</span>
+            </span>
             <button class="clear-button" ng-click="clearForm()" type="Button">clear</button>
+            <div ng-show="program.approver_name">Approver: {{program.approver_name}}</div>
         </div>
 
         <div>
-            <h4 class="program-name-input-field">Program Name:</h4>
+            <h3 class="program-name-input-field">Program Name:</h3>
             <input class="default-input-field" type="text" id="programNameInputBox" ng-model="program.name" />
         </div>
 
+        <div>
+            <div>
+            <h4 class="program-short-name-input-field">Program Short Name:</h4>
+            <input class="default-input-field" type="text" id="programShortNameInputBox" ng-model="program.shortName" />
+            </div>
+            <div class="default-input-field">
+                <span class="hint left float-left">Displayed in the mobile app</span>
+
+                <span class="chars-remain text-right float-right" ng-show="program.shortName.length <= 64">{{64 - program.shortName.length}} chars remaining</span>
+                <span class="over-char-limit text-right float-right" ng-show="program.shortName.length > 64">{{64 - program.shortName.length}} over the limit</span>
+            </div>
+        </div>
         <div>
             <h4>Objectives:</h4>
             <!-- <input class="default-input-field" type="text" id="" ng-model="" />-->
@@ -44,7 +59,7 @@
             <accordion-group  is-open="false"
                               ng-repeat="activity in program['learning-activities'] track by $index"
                               >
-                <accordion-heading>
+                <accordion-heading class="activity-name">
                     {{activity.name}}
                 </accordion-heading>
 
@@ -107,7 +122,7 @@
                                    ng-value="{{activity.url}}"/></span>
                     </div>
 
-                    <div>Select the correct answer with the radio button on the left</div>
+                    <div class="hint">Select the correct answer with the radio button on the left</div>
                 </div>
                 <div class="answer-area" ng-show="program['learning-activities'][$index]['review-question'].type == 'tf'">
                     <div>Select the correct answer</div>
