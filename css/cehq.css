@@ -72,10 +72,10 @@ ul.nav > li > a:hover {
 h2 {
   text-align: center;
 }
-
+/*
 h3 {
   padding-top: 14px;
-}
+}*/
 
 .main-article {
   margin-top: -10px;
@@ -175,10 +175,13 @@ iframe {
   text-align: center;
 }
 
+.program-form h4, .program-form h3 {
+    padding-top: 15px;
+}
 .program-list {
-  width: 50%;
+  width: 75%;
   height: 50%;
-  padding: 2%;
+  padding: 10px;
   margin: 0 auto;
 }
 
@@ -272,13 +275,18 @@ iframe {
 }
 
 .program-name-input-field{
-  margin-top: 3%;
-  /*display:inline-block;
-  width: 45%;*/
+    /*margin-top: 3%;
+    display:inline-block;
+    width: 45%;*/
 }
 
+.hint {
+    padding-top: 0px;
+    font-style: italic;
+    font-size: 12px;
+}
 .default-input-field{
-  margin-bottom: 1%;
+  margin-bottom: 5px;
   display:inline-block;
   width: 45%;
 }
@@ -328,9 +336,24 @@ h3.accordion{
   margin: 1px 0;
 }
 
+accordion .panel-title {
+    padding-top: 0px;
+}
+
 .left {
   text-align: left;
 }
+.float-left {
+    float: left;
+}
+
+.text-right {
+    text-align: right;
+}
+.float-right {
+    float: right;
+}
+
 #question-type-section {
   padding-top: 10px;
 }
@@ -416,4 +439,70 @@ h3.accordion{
     text-align: center;
     margin: 0 auto;
   }
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+.program-list .table {
+    margin-bottom: 0px;
+}
+
+.program-list table {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: 400px; /* this can vary */
+}
+
+.program-list table * {
+    box-sizing: inherit;
+    -moz-box-sizing: inherit;
+}
+
+.program-list thead {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.program-list tbody {
+    overflow-y: scroll;
+    display: inline-block;
+}
+
+.program-list thead > tr,  .program-list  tfoot > tr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+/*
+tbody > tr,
+*/
+
+.program-list thead, .program-list tfoot {
+    flex-shrink: 0;
+}
+
+.program-list th, .program-list tbody td {
+    width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.program-list tfoot {
+    display: inline-block;
+}
+
+.program-list tfoot td {
+    width: 100%;
+    display: inline-block;
+}
+
+.program-list td.name {
+    width: 100%;
 }
