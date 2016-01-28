@@ -119,28 +119,49 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 
 cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, $modal, server) {
 
-  var id = $routeParams.id;
 
-  if(id) {
-    $scope.pid = id;
-    server.getProgram(id).then(function (program) {
-      console.log("InputFormCtrl: " + id);
-      $scope.program = program.data;
-      if(!$scope.program.objectives) {
+    $scope.doInit = function (  ) {
+        var id = $routeParams.id;
+
+      if(id) {
+        $scope.pid = id;
+        server.getProgram(id).then(function (program) {
+          console.log("InputFormCtrl: " + id);
+          $scope.program = program.data;
+          if(!$scope.program.objectives) {
+            $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
+          }
+          if(!$scope.program['learningActivities']) {
+            $scope.program['learningActivities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
+          }
+
+          // To simplify the cross between the data and the web input, look at the learningActivities
+
+            for (i = 0; i < $scope.program['learningActivities'].length; i++) {
+                if ($scope.program['learningActivities'][i]['questions']) {
+                    console.log("learningActivities: " + $scope.program['learningActivities'][i].name);
+                    if ($scope.program['learningActivities'][i]['questions'][0] && $scope.program['learningActivities'][i]['questions'][0]['questionChoices']) {
+                        console.log("LA: " + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
+                        for (j = 0; j < $scope.program['learningActivities'][i]['questions'][0]['questionChoices'].length; j++) {
+                            //console.log("questionChoices: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect);
+                            if ($scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect == 1) {
+                                console.log("Answer: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].choice);
+                                $scope.program['learningActivities'][i]['questions'][0].answer = j.toString();
+                                console.log('Answer: ' + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
+                            }
+                        }
+                    }
+                }
+            }
+        });
+      } else {// NEW Program, set defaults
+        $scope.program = { "id" : "", "name" : ""  };
+        $scope.program.program_status = "draft";
         $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
+        $scope.program['learningActivities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
+        $scope.qType = {};
       }
-      if(!$scope.program['learning-activities']) {
-        $scope.program['learning-activities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
-      }
-    });
-  } else {// NEW Program, set defaults
-    $scope.program = { "id" : "", "name" : ""  };
-    $scope.program.program_status = "draft";
-    $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
-    $scope.program['learning-activities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
-    $scope.qType = {};
-  }
-
+    };
 
   $scope.goToProgramView = function (  ) {
     $location.path( '/programview' );
@@ -162,7 +183,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 
   $scope.sendPost = function() {
     $scope.createJSON();
-    $http.post("http://52.32.118.8:8080/CEHQWebServices/programs", $scope.program).success(function(data) {
+    $http.post("http://54.191.240.64:8080/CEHQWebServices/programs", $scope.program).success(function(data) {
       console.log("sent data" + $scope.program.name);
       $scope.clearForm();
 
@@ -263,35 +284,28 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, s
     };
 
     $scope.getDraftPrograms = function() {
-        server.getDraftPrograms().then(function (programs) {
+        server.getPrograms("draft").then(function (programs) {
             $scope.draftTablesItems = programs.data; //.reverse();
             $scope.displayedDraftCollection = [].concat($scope.draftTablesItems);
         });
     };
 
     $scope.getSubmittedPrograms = function() {
-        server.getSubmittedPrograms().then(function (programs) {
+        server.getPrograms("submitted").then(function (programs) {
             $scope.submittedTablesItems = programs.data; //.reverse();
             $scope.displayedSubmittedCollection = [].concat($scope.submittedTablesItems);
         });
     };
 
-    $scope.getAcceptedPrograms = function() {
-        server.getAcceptedPrograms().then(function (programs) {
-            $scope.acceptedTablesItems = programs.data; //.reverse();
-            $scope.displayedAcceptedCollection = [].concat($scope.acceptedTablesItems);
-        });
-    };
-
     $scope.getReviewedPrograms = function() {
-        server.getReviewedPrograms().then(function (programs) {
+        server.getPrograms("reviewed").then(function (programs) {
             $scope.reviewedTablesItems = programs.data; //.reverse();
             $scope.displayedReviewedCollection = [].concat($scope.reviewedTablesItems);
         });
     };
 
     $scope.getAcceptedPrograms = function() {
-        server.getAcceptedPrograms().then(function (programs) {
+        server.getPrograms("accepted").then(function (programs) {
             $scope.acceptedTablesItems = programs.data; //.reverse();
             $scope.displayedAcceptedCollection = [].concat($scope.acceptedTablesItems);
         });

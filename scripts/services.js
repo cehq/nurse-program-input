@@ -2,7 +2,7 @@ var cehqServices = angular.module('cehq.services', []);
 var programData = null;
 
 // all server access is now abstracted in the 'server' object
-cehqServices.factory('server', function( messages, appConstants, $http, $q ){
+cehqServices.factory('server', function( messages, appConstants, $http, $q , $localstorage){
 
   return {
 
@@ -84,15 +84,25 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
 
     },
 
-    getPrograms: function() {
-        //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+    getPrograms: function(programStatus) {
+        console.log('getPrograms: ' + programStatus);
+        var url = appConstants.BASE_URL + '/service/programs/names?status=' + programStatus;
+        console.log('getPrograms: ' + url);
+        var myJwt = $localstorage.get("jwt", "");
 
-        // DEV - Get data from MOCK data
-        return $http.get('data/programs.json');
+        $http.defaults.headers.common.Authorization = 'Bearer ' + myJwt;
+        $http.defaults.headers.common["Content-Type"] = "application/json";
+
+        return $http.get(url)
+            .then(function successCallback(response) {
+                //alert("success: " + JSON.stringify(response));
+                return response;
+            }, function errorCallback(response) {
+                return response;
+            });
     },
 
       getDraftPrograms: function() {
-          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
 
 
           // DEV - Get data from MOCK data
@@ -115,7 +125,7 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
       },
 
       getSubmittedPrograms: function() {
-          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
 
           // DEV - Get data from MOCK data
           return $http.get('data/programs.json').then(function (data) {
@@ -134,7 +144,7 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
       },
 
       getReviewedPrograms: function() {
-          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
 
           // DEV - Get data from MOCK data
           return $http.get('data/programs.json').then(function (data) {
@@ -153,7 +163,7 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
       },
 
       getAcceptedPrograms: function() {
-          //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/');
+
 
           // DEV - Get data from MOCK data
           return $http.get('data/programs.json').then(function (data) {
@@ -173,7 +183,21 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q ){
       },
 
     getProgram: function(id) {
-      //return $http.get('http://52.32.118.8:8080/CEHQWebServices/programs/' + id);
+        console.log('getProgram: ' + id);
+        var url = appConstants.BASE_URL + '/service/programs/' + id;
+
+        var myJwt = $localstorage.get("jwt", "");
+
+        $http.defaults.headers.common.Authorization = 'Bearer ' + myJwt;
+        $http.defaults.headers.common["Content-Type"] = "application/json";
+
+        return $http.get(url)
+            .then(function successCallback(response) {
+                //alert("success: " + JSON.stringify(response));
+                return response;
+            }, function errorCallback(response) {
+                return response;
+            });
 
         return $http.get('data/programs.json').then(function (data) {
             if (!programData) {
