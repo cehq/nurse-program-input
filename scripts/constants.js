@@ -55,7 +55,7 @@ cehqConstants.constant( 'appConstants', {
 
   //BASE_URL: 'http://54.68.24.128:80/cehq'
 
-  BASE_URL: 'http://52.32.118.8:8080'
+  BASE_URL: 'http://54.191.240.64:8080'
 
 
 } );
