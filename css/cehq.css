@@ -89,6 +89,11 @@ h3 {
   margin: 0 auto;
 }
 
+.center {
+    margin: 0px auto 0px auto;
+    text-align: center;
+}
+
 footer {
   padding: 10px;
   border: 1px lightgray solid;
@@ -381,6 +386,10 @@ accordion .panel-title {
   opacity: 0.4;
   color: deepskyblue;
 }
+.program-status.reviewed {
+    opacity: 0.4;
+    color: indigo;
+}
 .program-status.accepted {
   opacity: 0.4;
   color: darkgreen;
@@ -504,5 +513,17 @@ tbody > tr,
 }
 
 .program-list td.name {
-    width: 100%;
+    width: 50%;
 }
+
+/*
+*  objectives
+*/
+.objectives textarea.default-input-field {
+    margin-bottom: 0px;
+}
+
+.objectives .hint {
+    margin-bottom: 10px;
+}
+

@@ -1,4 +1,4 @@
-var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories','smart-table']);
+var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories','smart-table','angularSpinners']);
 
 
 cehqControllers.controller('NavBarCtrl', function ($scope,
@@ -117,43 +117,67 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 
 });
 
-cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, $modal, server) {
+cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, $modal, server, spinnerService) {
 
+    $scope.setLoading = function(loading) {
+        if (loading) {
+            spinnerService.show('programSpinner');
+        } else{
+            spinnerService.hide('programSpinner');
+        }
+    }
 
     $scope.doInit = function (  ) {
         var id = $routeParams.id;
 
       if(id) {
+        $scope.setLoading(true);
         $scope.pid = id;
         server.getProgram(id).then(function (program) {
           console.log("InputFormCtrl: " + id);
           $scope.program = program.data;
-          if(!$scope.program.objectives) {
+          //console.log("Program: " + JSON.stringify($scope.program));
+          if(!$scope.program.objectives || $scope.program.objectives.length == 0) {
             $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
           }
-          if(!$scope.program['learningActivities']) {
+          if(!$scope.program['learningActivities'] || $scope.program['learningActivities'].length == 0) {
             $scope.program['learningActivities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
           }
-
+            //console.log("objectives: " + $scope.program.objectives);
+            //if ($scope.program.objectives[0])
           // To simplify the cross between the data and the web input, look at the learningActivities
 
             for (i = 0; i < $scope.program['learningActivities'].length; i++) {
                 if ($scope.program['learningActivities'][i]['questions']) {
-                    console.log("learningActivities: " + $scope.program['learningActivities'][i].name);
-                    if ($scope.program['learningActivities'][i]['questions'][0] && $scope.program['learningActivities'][i]['questions'][0]['questionChoices']) {
-                        console.log("LA: " + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
-                        for (j = 0; j < $scope.program['learningActivities'][i]['questions'][0]['questionChoices'].length; j++) {
-                            //console.log("questionChoices: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect);
-                            if ($scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect == 1) {
-                                console.log("Answer: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].choice);
-                                $scope.program['learningActivities'][i]['questions'][0].answer = j.toString();
-                                console.log('Answer: ' + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
+                    //console.log("learningActivities: " + $scope.program['learningActivities'][i].name);
+                    if ($scope.program['learningActivities'][i]['questions'][0]['questionType']['type'] == 1) { // Handle Multiple Choice
+                        if ($scope.program['learningActivities'][i]['questions'][0] && $scope.program['learningActivities'][i]['questions'][0]['questionChoices']) {
+                            //console.log("LA: " + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
+                            for (j = 0; j < $scope.program['learningActivities'][i]['questions'][0]['questionChoices'].length; j++) {
+                                //console.log("questionChoices: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect);
+                                if ($scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect == 1) {
+                                    //console.log("Answer: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].choice);
+                                    console.log("Answer Index: " + j);
+                                    $scope.program['learningActivities'][i]['questions'][0].answer = j.toString();
+                                    //console.log('Answer: ' + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
+                                }
                             }
                         }
+                    } else { //Not Multiple choice probably True/False
+                        if ($scope.program['learningActivities'][i]['questions'][0]['tf'] == 1) {
+                            //console.log("Answer: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].choice);
+                            //$scope.program['learningActivities'][i]['questions'][0].answer = j.toString();
+                            //console.log('Answer: ' + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
+                        }
+
                     }
                 }
             }
+        }).finally(function () {
+            // no matter what happens, hide the spinner when done
+            $scope.setLoading(false);
         });
+
       } else {// NEW Program, set defaults
         $scope.program = { "id" : "", "name" : ""  };
         $scope.program.program_status = "draft";
@@ -264,7 +288,7 @@ cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInsta
   };
 });
 
-cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server) {
+cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server, spinnerService) {
 
 
   $scope.goToProgramInput = function (row) {
@@ -283,10 +307,22 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, s
         alert(id);
     };
 
+    $scope.setLoading = function(loading) {
+       if (loading) {
+           spinnerService.show('programsSpinner');
+       } else{
+           spinnerService.hide('programsSpinner');
+       }
+    }
+
     $scope.getDraftPrograms = function() {
+        $scope.setLoading(true);
         server.getPrograms("draft").then(function (programs) {
             $scope.draftTablesItems = programs.data; //.reverse();
             $scope.displayedDraftCollection = [].concat($scope.draftTablesItems);
+        }).finally(function () {
+            // no matter what happens, hide the spinner when done
+            $scope.setLoading(false);
         });
     };
 

@@ -2,6 +2,10 @@
 
     <h2>Programs View</h2>
 
+        <div class="center" >
+            <spinner name="programsSpinner" img-src="images/spinner.gif" > Loading...</spinner>
+        </div>
+
     <form class="program-form" ng-controller="ViewFormCtrl">
 
         <button class="go-to-program-input-button" ng-click="goToProgramInput()" type="submit" >New Program</button>
@@ -21,14 +25,14 @@
                                 <input st-search="name" placeholder="search for Draft" class="input-sm form-control" type="search"/>
                             </th>
                             <th>
-                                <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                                <input st-search="lastUpdated" placeholder="date" class="input-sm form-control" type="search"/>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="row in displayedDraftCollection" >
                         <td class="left name">{{row.name}}</td>
-                        <td>{{row.last_updated}}</td>
+                        <td>{{row.lastUpdated}}</td>
                         <td>
                             <button ng-click="goToProgramInput(row)" >Edit</button>
                         </td>
@@ -51,14 +55,14 @@
                         <input st-search="name" placeholder="search for program" class="input-sm form-control" type="search"/>
                     </th>
                     <th>
-                        <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                        <input st-search="lastUpdated" placeholder="date" class="input-sm form-control" type="search"/>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="row in displayedSubmittedCollection" >
-                    <td class="left">{{row.name}}</td>
-                    <td>{{row.last_updated}}</td>
+                    <td class="left name">{{row.name}}</td>
+                    <td>{{row.lastUpdated}}</td>
                     <td>
                         <button ng-click="goToProgramInput(row)" >Edit</button>
                     </td>
@@ -80,14 +84,14 @@
                         <input st-search="name" placeholder="search for program" class="input-sm form-control" type="search"/>
                     </th>
                     <th>
-                        <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                        <input st-search="lastUpdated" placeholder="date" class="input-sm form-control" type="search"/>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="row in displayedReviewedCollection" >
-                    <td class="left">{{row.name}}</td>
-                    <td>{{row.last_updated}}</td>
+                    <td class="left name">{{row.name}}</td>
+                    <td>{{row.lastUpdated}}</td>
                     <td>
                         <button ng-click="goToProgramInput(row)" >Edit</button>
                     </td>
@@ -109,14 +113,14 @@
                         <input st-search="name" placeholder="search for program" class="input-sm form-control" type="search"/>
                     </th>
                     <th>
-                        <input st-search="last_updated" placeholder="date" class="input-sm form-control" type="search"/>
+                        <input st-search="lastUpdated" placeholder="date" class="input-sm form-control" type="search"/>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="row in displayedAcceptedCollection" >
-                    <td class="left">{{row.name}}</td>
-                    <td>{{row.last_updated}}</td>
+                    <td class="left name">{{row.name}}</td>
+                    <td>{{row.lastUpdated}}</td>
                     <td>
                         <button ng-click="goToProgramInput(row)" >View</button>
                     </td>
