@@ -174,7 +174,7 @@
 
         <div>
             <button class="back-button" ng-click="goToProgramView('/programview')" type="Button">back</button>
-            <span class="program-status {{program.program_status}}">{{program.program_status}}</span>
+            <span class="program-status {{program['status'].status}}">{{program['status'].status}}</span>
             <button class="clear-button" ng-click="clearForm()" type="Button">clear</button>
         </div>
     </form>

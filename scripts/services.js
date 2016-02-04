@@ -212,6 +212,44 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q , $lo
             }
         });
     },
+      updateProgram: function(program) {
+          console.log('getProgram: ' + program.id);
+          var url = appConstants.BASE_URL + '/service/programs/' + program.id;
+
+          var myJwt = $localstorage.get("jwt", "");
+
+          $http.defaults.headers.common.Authorization = 'Bearer ' + myJwt;
+          $http.defaults.headers.common["Content-Type"] = "application/json";
+
+          return $http.put(url, program)
+              .then(function successCallback(response) {
+                  //alert("success: " + JSON.stringify(response));
+                  return response;
+              }, function errorCallback(response) {
+                  alert("error: " + JSON.stringify(response));
+                  return response;
+              });
+      },
+
+      addProgram: function(program) {
+          console.log('getProgram: ' + program.id);
+          var url = appConstants.BASE_URL + '/service/programs/' + program.id;
+
+          var myJwt = $localstorage.get("jwt", "");
+
+          $http.defaults.headers.common.Authorization = 'Bearer ' + myJwt;
+          $http.defaults.headers.common["Content-Type"] = "application/json";
+
+          return $http.post(url, program)
+              .then(function successCallback(response) {
+                  //alert("success: " + JSON.stringify(response));
+                  return response;
+              }, function errorCallback(response) {
+                  alert("error: " + JSON.stringify(response));
+                  return response;
+              });
+      },
+
       submitProgram: function(id, program) {
 
           // FOR DEV ONLY

@@ -73,6 +73,9 @@ cehqConstants.constant('appConstants', {
 
     //BASE_URL: 'http://54.68.24.128:80/cehq'
 
+    // LOCAL DEV
+    //BASE_URL: 'http://localhost:8080'
+
     BASE_URL: 'http://localhost:8100'
 
 
