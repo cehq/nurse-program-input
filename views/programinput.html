@@ -110,15 +110,13 @@
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="0"/>
 
                             <input class="default-input-field" type="text"
-                                   ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][0].choice"
-                                   ng-value="{{program['learningActivities'][$index]['questions'].choices[0]}}"/></span>
+                                   ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][0].choice"/></span>
                         <span><p>Choice #2 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 1" class="right-answer">(correct)</span></p>
                             <input type="radio"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="1"/>
 
                             <input class="default-input-field" type="text"
-                                   ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][1].choice"
-                                   ng-value="{{program['learningActivities'][$index]['questions'].choices[1]}}"/></span>
+                                   ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][1].choice"/></span>
 
                         <span><p>Choice #3 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 2" class="right-answer">(correct)</span></p>
                             <input type="radio"
