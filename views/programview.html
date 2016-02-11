@@ -1,6 +1,6 @@
 <!doctype html>
 
-    <h2>Programs View</h2>
+    <h2>Program Management</h2>
 
         <div class="center" >
             <spinner name="programsSpinner" img-src="images/spinner.gif" > Loading...</spinner>
@@ -8,33 +8,44 @@
 
     <form class="program-form" ng-controller="ViewFormCtrl" ng-init="doInit()">
 
-        <button class="go-to-program-input-button" ng-click="goToProgramInput()" type="submit" >New Program</button>
+        <button class="go-to-program-input-button" ng-click="goToProgramInput()" type="submit" >Begin New Program</button>
 
 
-        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getDraftPrograms()">
-            <h3>Draft Programs</h3>
+        <div class="program-list" >
 
                 <table st-safe-src="draftTablesItems" st-table="displayedDraftCollection" class="table table-striped">
                     <thead>
                         <tr>
+                            <th class="status">Status</th>
                             <th st-sort="name" class="left name">Program Name</th>
-                            <th>Last Updated</th>
+                            <th class="last-updated">Last Updated</th>
                         </tr>
                         <tr>
-                            <th>
-                                <input st-search="name" placeholder="search for Draft" class="input-sm form-control" type="search"/>
+                            <th class="status">
+                                <select st-search="status" placeholder="status filter" class="input-sm form-control" type="search">
+                                    <option value="" selected></option>
+                                    <option value="draft">draft</option>
+                                    <option value="submitted">submitted</option>
+                                    <option value="reviewed">reviewed</option>
+                                    <option value="accepted">accepted</option>
+                                </select>
                             </th>
                             <th>
-                                <input st-search="lastUpdated" placeholder="date" class="input-sm form-control" type="search"/>
+                                <input st-search="name" placeholder="search by Program name" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th class="last-updated">
+                                <input st-search="lastUpdated" placeholder="date YYYY-MM-DD" class="input-sm form-control" type="search"/>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="row in displayedDraftCollection" >
+                        <td class="status program-status-view {{row.status}}">{{row.status}}</td>
                         <td class="left name">{{row.name}}</td>
-                        <td>{{row.lastUpdated}}</td>
+                        <td class="last-updated">{{row.lastUpdated}}</td>
                         <td>
-                            <button ng-click="goToProgramInput(row)" >Edit</button>
+                            <button ng-show="row.status == 'draft'" ng-click="goToProgramInput(row)" >Edit</button>
+                            <button ng-show="row.status != 'draft'" ng-click="goToProgramInput(row)" >View</button>
                         </td>
                     </tr>
                     </tbody>
@@ -42,7 +53,7 @@
 
         </div>
 
-        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getSubmittedPrograms()">
+        <!--<div class="program-list" >
             <h3>Submitted Programs</h3>
             <table st-safe-src="submittedTablesItems" st-table="displayedSubmittedCollection" class="table table-striped">
                 <thead>
@@ -71,7 +82,7 @@
             </table>
         </div>
 
-        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getReviewedPrograms()">
+        <div class="program-list" >
             <h3>Reviewed Programs</h3>
             <table st-safe-src="reviewedTablesItems" st-table="displayedReviewedCollection" class="table table-striped">
                 <thead>
@@ -100,7 +111,7 @@
             </table>
         </div>
 
-        <div class="program-list" ng-controller="ViewFormCtrl" ng-init="getAcceptedPrograms()">
+        <div class="program-list" >
             <h3>Accepted Programs</h3>
             <table st-safe-src="acceptedTablesItems" st-table="displayedAcceptedCollection" class="table table-striped">
                 <thead>
@@ -127,7 +138,7 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div>-->
 
     </form>
 

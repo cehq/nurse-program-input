@@ -183,8 +183,8 @@
         <button ng-show="program['status'].status == 'draft'" class="program-button delete-program-button" ng-click="cehqModal('deleteDraft')" ng-controller="InputFormCtrl" type="submit" >Delete Draft</button>
         <button ng-show="program['status'].status == 'draft'" class="program-button draft-program-button" ng-click="cehqModal('saveDraft')" ng-controller="InputFormCtrl" type="submit" >Save Draft</button>
         <button ng-show="program.id > 0 && program['status'].status == 'draft'" class="program-button submit-program-button" ng-click="cehqModal('submitDraft')" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
-        <button ng-show="program['status'].status == 'submitted' || program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('backDraft')" ng-controller="InputFormCtrl" type="submit" >Back to Draft</button>
-        <button ng-show="program['status'].status == 'submitted'" class="program-button send-program-button" ng-click="cehqModal('reviewProgram')" ng-controller="InputFormCtrl" type="submit" >Review Program</button>
+        <button ng-show="program['status'].status == 'submitted' || program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('backDraft')" ng-controller="InputFormCtrl" type="submit" >Move to Draft</button>
+        <button ng-show="program['status'].status == 'submitted'" class="program-button send-program-button" ng-click="cehqModal('reviewProgram')" ng-controller="InputFormCtrl" type="submit" >Move to Review</button>
         <button ng-show="program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('acceptProgram')" ng-controller="InputFormCtrl" type="submit" >Accept Program</button>
         <button ng-show="program['status'].status == 'accepted'" class="program-button send-program-button" ng-click="cehqModal('archiveProgram')" ng-controller="InputFormCtrl" type="submit" >Archive</button>
 

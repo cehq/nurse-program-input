@@ -184,8 +184,8 @@ iframe {
     padding-top: 15px;
 }
 .program-list {
-  width: 75%;
-  height: 50%;
+  /*width: 75%;
+  height: 50%;*/
   padding: 10px;
   margin: 0 auto;
 }
@@ -379,19 +379,19 @@ accordion .panel-title {
   text-transform: uppercase;
   font-size: 36px;
 }
-.program-status.draft {
+.draft {
   opacity: 0.4;
   color: crimson;
 }
-.program-status.submitted {
+.submitted {
   opacity: 0.4;
   color: deepskyblue;
 }
-.program-status.reviewed {
+.reviewed {
     opacity: 0.4;
     color: indigo;
 }
-.program-status.accepted {
+.accepted {
   opacity: 0.4;
   color: darkgreen;
 }
@@ -465,7 +465,7 @@ accordion .panel-title {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    max-height: 400px; /* this can vary */
+    /*  max-height: 400px; this can vary */
 }
 
 .program-list table * {
@@ -501,7 +501,6 @@ tbody > tr,
     width: 100%;
     overflow-x: hidden;
     text-overflow: ellipsis;
-
 }
 
 .program-list tfoot {
@@ -512,9 +511,13 @@ tbody > tr,
     width: 100%;
     display: inline-block;
 }
+/*
+.program-list td.program-status-view {
+    width: 10%;
+}*/
 
 .program-list td.name {
-    width: 50%;
+    width: 80%;
 }
 
 /*
@@ -528,3 +531,14 @@ tbody > tr,
     margin-bottom: 10px;
 }
 
+.program-list th.status, .program-list tbody td.status,
+.status {
+    max-width: 250px;
+    width: 100px;
+    min-width: 140px;
+}
+
+.program-list th.last-updated, .program-list tbody td.last-updated,
+.last-updated {
+    max-width: 200px;
+}

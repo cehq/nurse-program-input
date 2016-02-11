@@ -416,6 +416,26 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $
 
     $scope.doInit = function () {
         $scope.isAuthenticated = AuthService.isAuthenticated();
+        $scope.loadAllPrograms();
+
+        // Simulating big list
+        /*$scope.displayedDraftCollection = [];
+        $scope.draftTablesItems = [];
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();
+        $scope.loadAllPrograms();*/
     };
 
   $scope.goToProgramInput = function (row) {
@@ -446,25 +466,32 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $
     }
 
     $scope.loadAllPrograms = function() {
+        console.log("loadAllPrograms");
         $scope.setLoading(true);
         server.getPrograms("draft").then(function (programs) {
-            $scope.draftTablesItems = programs.data; //.reverse();
+            //$scope.draftTablesItems = $scope.draftTablesItems.concat(programs.data);
+            //$scope.displayedDraftCollection = $scope.displayedDraftCollection.concat(programs.data);
+            $scope.draftTablesItems = programs.data;
             $scope.displayedDraftCollection = [].concat($scope.draftTablesItems);
+
             server.getPrograms("submitted").then(function (programs) {
-                $scope.submittedTablesItems = programs.data; //.reverse();
-                $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat($scope.submittedTablesItems);
+                $scope.draftTablesItems = $scope.draftTablesItems.concat(programs.data);
+                $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat(programs.data);
                 server.getPrograms("reviewed").then(function (programs) {
-                    $scope.reviewedTablesItems = programs.data; //.reverse();
-                    $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat($scope.reviewedTablesItems);
+                    $scope.draftTablesItems = $scope.draftTablesItems.concat(programs.data);
+                    $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat(programs.data);
                     server.getPrograms("accepted").then(function (programs) {
-                        $scope.acceptedTablesItems = programs.data; //.reverse();
-                        $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat($scope.acceptedTablesItems);
+                        $scope.draftTablesItems = $scope.draftTablesItems.concat(programs.data);
+                        $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat(programs.data);
+                    }).finally(function () {
+                        // no matter what happens, hide the spinner when done
+                        $scope.setLoading(false);
                     });
                 });
             });
         }).finally(function () {
             // no matter what happens, hide the spinner when done
-            $scope.setLoading(false);
+            //$scope.setLoading(false);
         });
     };
 
