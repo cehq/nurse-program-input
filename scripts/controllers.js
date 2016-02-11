@@ -1,15 +1,19 @@
+var masterProgram;
+
 var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories','smart-table','angularSpinners']);
 
 
 cehqControllers.controller('NavBarCtrl', function ($scope,
+                                                   $state,
                                                    $modal,
+                                                   AuthService,
                                                    $location,
                                                    mainMenuAnonymous,
                                                    rightMenuAnonymous,
                                                    mainMenuSignedIn,
                                                    rightMenuSignedIn) {
 
-
+    console.log("NavBarCtrl");
   $scope.isCollapsed = true;
 
   $scope.mainMenuItems = mainMenuAnonymous;
@@ -17,6 +21,19 @@ cehqControllers.controller('NavBarCtrl', function ($scope,
   $scope.rightMenuItems = rightMenuAnonymous;
 
   $scope.currentPage = "home";
+
+  $scope.checkAuth = function () {
+      $scope.isAuthenticated = AuthService.isAuthenticated();
+  };
+    $scope.isAuth = function () {
+        return AuthService.isAuthenticated();
+    };
+
+    $scope.logout = function () {
+        AuthService.logout();
+        $scope.isAuthenticated = false;
+        $state.go("home");
+    };
 
 
   $scope.isCurrentPage = function (page) {
@@ -52,7 +69,7 @@ cehqControllers.controller('NavBarCtrl', function ($scope,
 
 });
 
-cehqControllers.controller('SignInCtrl', function ($scope, $modalInstance, server, $localstorage, $location) {
+cehqControllers.controller('SignInCtrl', function ($scope, $state, server, AuthService, $localstorage, $location) {
 
   console.log('SignInCtrl');
 
@@ -69,9 +86,8 @@ cehqControllers.controller('SignInCtrl', function ($scope, $modalInstance, serve
         alert("ERROR - Bad username or password");
       } else if (userLogin.status === 200) {
         $localstorage.set("jwt", userLogin.data.jwt);
-
-        $modalInstance.dismiss('login');
-        $location.path( '/programview' );
+          $scope.isAuthenticated = AuthService.isAuthenticated();
+          $state.go('programview');
 
       } else {
         alert("error: " + userLogin.data + " ; status: " + userLogin.status +
@@ -81,11 +97,6 @@ cehqControllers.controller('SignInCtrl', function ($scope, $modalInstance, serve
     });
 
 
-  };
-
-  $scope.cancel = function () {
-    console.log('cancel');
-    $modalInstance.dismiss('cancel');
   };
 
 });
@@ -117,7 +128,7 @@ cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 
 });
 
-cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $routeParams, $modal, server, spinnerService) {
+cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, $stateParams, $modal, server, spinnerService) {
 
     $scope.setLoading = function(loading) {
         if (loading) {
@@ -127,8 +138,10 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
         }
     }
 
+    masterProgram = angular.copy($scope.program);
+
     $scope.doInit = function (  ) {
-        var id = $routeParams.id;
+        var id = $stateParams.id;
 
       if(id) {
         $scope.setLoading(true);
@@ -149,7 +162,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 
             for (i = 0; i < $scope.program['learningActivities'].length; i++) {
                 if ($scope.program['learningActivities'][i]['questions']) {
-                    //console.log("learningActivities: " + $scope.program['learningActivities'][i].name);
+                    console.log("learningActivities: " + $scope.program['learningActivities'][i].name);
                     if ($scope.program['learningActivities'][i]['questions'][0]['questionType']['type'] == 1) { // Handle Multiple Choice
                         if ($scope.program['learningActivities'][i]['questions'][0] && $scope.program['learningActivities'][i]['questions'][0]['questionChoices']) {
                             //console.log("LA: " + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]));
@@ -181,7 +194,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
       } else {// NEW Program, set defaults
         $scope.program = { "id" : "", "name" : ""  };
         $scope.program['status'] = {"id": 1, "status": "draft"};
-        $scope.program.objectives = [{"objective": " "}, {"objective": " "}, {"objective": " "}];
+        $scope.program.objectives = [{"objective": " ","order": 1}, {"objective": " ","order": 2}, {"objective": " ","order": 3}];
         $scope.program['learningActivities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
           //$scope.program['learningActivities'][i]['questions'][0]
         $scope.qType = {};
@@ -233,71 +246,75 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 
 });
 
-cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInstance, server, program) {
+cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $modalInstance, server, program) {
   $scope.program = program;
   $scope.id = $scope.program.id;
 
+    var cleanProgram = function(program) {
+        //console.log("learningActivities: " + $scope.program['learningActivities'].length);
+        for (i = 0; i < program['learningActivities'].length; i++) {
+            if (program['learningActivities'][i]['questions'] && program['learningActivities'][i]['questions'].length > 0) {
+                //console.log("learningActivities: " + program['learningActivities'][i].name);
+                if (program['learningActivities'][i]['questions'][0]['questionType']['type'] == 1) { // Handle Multiple Choice
+                    console.log("Multiple Choice");
+                    if (program['learningActivities'][i]['questions'][0] && program['learningActivities'][i]['questions'][0]['questionChoices']) {
+                        console.log("Question choices: " + JSON.stringify(program['learningActivities'][i]['questions'][0]['questionChoices']));
 
+                        // When creating a brand new Multiple Choice, our questionChoices is blank and adds choices as objects instead of array items
+                        if(typeof program['learningActivities'][i]['questions'][0]['questionChoices'].length === 'undefined'){
+                            var temp_array = [];
+                            for (q = 0; q < 6; q++) {
+                                if (typeof program['learningActivities'][i]['questions'][0]['questionChoices'][q] !== 'undefined') {
+                                    the_choice = program['learningActivities'][i]['questions'][0]['questionChoices'][q]['choice'];
+                                    console.log("item: " + the_choice);
+                                    temp_array[q] = {'choice':the_choice};
+                                    delete program['learningActivities'][i]['questions'][0]['questionChoices'][q];
+                                }
+                            }
+                            program['learningActivities'][i]['questions'][0]['questionChoices'] = temp_array;
+
+                        } else {
+                            console.log("Question choice length: " + program['learningActivities'][i]['questions'][0]['questionChoices'].length);
+                        }
+
+                        console.log("ANSWER: " + program['learningActivities'][i]['questions'][0].answer);
+                        if (typeof program['learningActivities'][i]['questions'][0].answer === 'undefined') {
+                            program['learningActivities'][i]['questions'][0].answer = "0";
+                        }
+                        answer_index = parseInt(program['learningActivities'][i]['questions'][0].answer);
+                        for (j = 0; j < program['learningActivities'][i]['questions'][0]['questionChoices'].length; j++) {
+                            console.log("questionChoice: " + JSON.stringify(program['learningActivities'][i]['questions'][0]['questionChoices']));
+                            if (j == answer_index) {
+                                console.log("setting isCorrect: " + j);
+                                program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect = 1;
+                            } else {
+                                program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect = 0;
+                            }
+                        }
+                        delete program['learningActivities'][i]['questions'][0].answer;
+
+
+                    }
+                } else { //Not Multiple choice probably True/False
+                    if (program['learningActivities'][i]['questions'][0]['tf'] == 1) {
+
+                    }
+
+                }
+            }
+        }
+        return program;
+    }
 
   $scope.saveDraftOk = function (doContinue) {
       var masterData = angular.copy($scope.program);
 
-      //console.log("learningActivities: " + $scope.program['learningActivities'].length);
-      for (i = 0; i < $scope.program['learningActivities'].length; i++) {
-          if ($scope.program['learningActivities'][i]['questions'] && $scope.program['learningActivities'][i]['questions'].length > 0) {
-              //console.log("learningActivities: " + $scope.program['learningActivities'][i].name);
-              if ($scope.program['learningActivities'][i]['questions'][0]['questionType']['type'] == 1) { // Handle Multiple Choice
-                    console.log("Multiple Choice");
-                  if ($scope.program['learningActivities'][i]['questions'][0] && $scope.program['learningActivities'][i]['questions'][0]['questionChoices']) {
-                      console.log("Question choices: " + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]['questionChoices']));
+      cleanedProgram = cleanProgram($scope.program);
 
-                          // When creating a brand new Multiple Choice, our questionChoices is blank and adds choices as objects instead of array items
-                          if(typeof $scope.program['learningActivities'][i]['questions'][0]['questionChoices'].length === 'undefined'){
-                              var temp_array = [];
-                              for (q = 0; q < 6; q++) {
-                                  if (typeof $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][q] !== 'undefined') {
-                                      the_choice = $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][q]['choice'];
-                                      console.log("item: " + the_choice);
-                                      temp_array[q] = {'choice':the_choice};
-                                      delete $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][q];
-                                  }
-                              }
-                              $scope.program['learningActivities'][i]['questions'][0]['questionChoices'] = temp_array;
-
-                          } else {
-                              console.log("Question choice length: " + $scope.program['learningActivities'][i]['questions'][0]['questionChoices'].length);
-                          }
-
-                      console.log("ANSWER: " + $scope.program['learningActivities'][i]['questions'][0].answer);
-                      if (typeof $scope.program['learningActivities'][i]['questions'][0].answer === 'undefined') {
-                          $scope.program['learningActivities'][i]['questions'][0].answer = "0";
-                      }
-                          answer_index = parseInt($scope.program['learningActivities'][i]['questions'][0].answer);
-                          for (j = 0; j < $scope.program['learningActivities'][i]['questions'][0]['questionChoices'].length; j++) {
-                              console.log("questionChoice: " + JSON.stringify($scope.program['learningActivities'][i]['questions'][0]['questionChoices']));
-                              if (j == answer_index) {
-                                  console.log("setting isCorrect: " + j);
-                                  $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect = 1;
-                              } else {
-                                  $scope.program['learningActivities'][i]['questions'][0]['questionChoices'][j].isCorrect = 0;
-                              }
-                          }
-                          delete $scope.program['learningActivities'][i]['questions'][0].answer;
-
-
-                  }
-              } else { //Not Multiple choice probably True/False
-                  if ($scope.program['learningActivities'][i]['questions'][0]['tf'] == 1) {
-
-                  }
-
-              }
-          }
-      }
-      console.log("save draft data: " + JSON.stringify($scope.program));
-      if ($scope.program.id) {
+      console.log("save draft data: " + JSON.stringify(cleanedProgram));
+      if (cleanedProgram.id) {
           console.log("updateProgram");
-          server.updateProgram($scope.program).then(function (retData) {
+          server.updateProgram(cleanedProgram).then(function (retData) {
               //JMS TODO: Problem with Save-Continue - The INITIAL Program (in memory) is modified to be able to
               //  send to web service; Can't use the first version because LA may be messed up (not initialized correctly)
               if (doContinue) { // Save and Continue
@@ -306,8 +323,8 @@ cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInsta
           });
       } else {
           console.log("addProgram");
-          server.addProgram($scope.program).then(function (retData) {
-              console.log(JSON.stringify($scope.program));
+          server.addProgram(cleanedProgram).then(function (retData) {
+              console.log(JSON.stringify(retData));
           });
       }
 
@@ -324,14 +341,14 @@ cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInsta
   $scope.submitDraftOk = function () {
     // TODO: Now SAVE and then do something
     $modalInstance.close();
-
-    if($scope.id) { // Editing a previous Draft
+      cleanedProgram = cleanProgram($scope.program);
+    if(cleanedProgram.id) { // Editing a previous Draft
         // Clean Program and make sure it is ok for submitting
+        cleanedProgram['status'].id = cleanedProgram['status'].nextStatus;
 
-
-      server.submitProgram($scope.id, $scope.program).then(function (program) {
-        console.log("submitProgram complete");
-       // $scope.goToProgramView();
+      server.updateProgram(cleanedProgram).then(function (response) {
+          console.log(JSON.stringify(response));
+          $state.go("programview");
       });
     } else { // Submitting a NEW Draft, not yet saved
       $modalInstance = $modal.open({
@@ -341,17 +358,30 @@ cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInsta
     }
   };
 
-  $scope.acceptProgramOk = function () {
-    // TODO: Now SAVE and then do something
-    $modalInstance.close();
+    $scope.backDraft = function () {
+        // TODO: Now SAVE and then do something
+        $modalInstance.close();
+        cleanedProgram = cleanProgram($scope.program);
+        cleanedProgram['status'].id = 1; // Draft is hardcoded to 1
 
-    server.acceptProgram($scope.id, $scope.program).then(function (program) {
-      //$scope.program.program_status = "submitted";
-      console.log("acceptProgramOk complete");
-      $scope.goToProgramView();
-    });
+        server.updateProgram(cleanedProgram).then(function (response) {
+            //console.log(JSON.stringify(response));
+            $state.go("programview");
+        });
+    };
 
-  };
+    $scope.programNextStatus = function () {
+        // TODO: Now SAVE and then do something
+        $modalInstance.close();
+        cleanedProgram = cleanProgram($scope.program);
+        cleanedProgram['status'].id = cleanedProgram['status'].nextStatus;
+
+        server.updateProgram(cleanedProgram).then(function (response) {
+            console.log(JSON.stringify(response));
+            $state.go("programview");
+        });
+    };
+
   $scope.unpublishProgramOk = function () {
     // TODO: Now SAVE and then do something
     $modalInstance.close();
@@ -364,23 +394,41 @@ cehqControllers.controller('ModalCtrl', function ($scope, $location, $modalInsta
 
   };
 
+    $scope.deleteDraftOk = function () {
+        // TODO: Now SAVE and then do something
+        $modalInstance.close();
+
+        server.deleteProgram($scope.id).then(function (program) {
+            //$scope.program.program_status = "submitted";
+            console.log("DELETE complete");
+            $state.go("programview");
+        });
+
+    };
+
   $scope.cancel = function () {
     // Don't Save
     $modalInstance.dismiss('cancel');
   };
 });
 
-cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, server, spinnerService) {
+cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $state, server, AuthService, spinnerService) {
 
+    $scope.doInit = function () {
+        $scope.isAuthenticated = AuthService.isAuthenticated();
+    };
 
   $scope.goToProgramInput = function (row) {
     //alert(row.id);
 
     if (row && row.id) {
-      //console.log("selectedProgram: " + row.id);
-      $location.path("programinput/" + row.id);
+      console.log("selectedProgram: " + row.id);
+        var result = { id: row.id };
+        $state.go("programinput.detail", result);
+      //$location.path("programinput/" + row.id);
     } else {
-      $location.path("programinput");
+        $state.go("programinput");
+      //$location.path("programinput");
     }
   };
 
@@ -396,6 +444,29 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, s
            spinnerService.hide('programsSpinner');
        }
     }
+
+    $scope.loadAllPrograms = function() {
+        $scope.setLoading(true);
+        server.getPrograms("draft").then(function (programs) {
+            $scope.draftTablesItems = programs.data; //.reverse();
+            $scope.displayedDraftCollection = [].concat($scope.draftTablesItems);
+            server.getPrograms("submitted").then(function (programs) {
+                $scope.submittedTablesItems = programs.data; //.reverse();
+                $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat($scope.submittedTablesItems);
+                server.getPrograms("reviewed").then(function (programs) {
+                    $scope.reviewedTablesItems = programs.data; //.reverse();
+                    $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat($scope.reviewedTablesItems);
+                    server.getPrograms("accepted").then(function (programs) {
+                        $scope.acceptedTablesItems = programs.data; //.reverse();
+                        $scope.displayedDraftCollection = $scope.displayedDraftCollection.concat($scope.acceptedTablesItems);
+                    });
+                });
+            });
+        }).finally(function () {
+            // no matter what happens, hide the spinner when done
+            $scope.setLoading(false);
+        });
+    };
 
     $scope.getDraftPrograms = function() {
         $scope.setLoading(true);

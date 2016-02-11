@@ -191,7 +191,7 @@ iframe {
 }
 
 .program-button {
-  width:15%;
+  width:30%;
   font-style:normal;
   font-weight:normal;
   font-family:"Open Sans";
@@ -210,6 +210,7 @@ iframe {
   margin-bottom: 5%;
   margin-top: 2%;
   left: 57%;
+    text-wrap: none;
 }
 .delete-program-button {
   background-color: red;
@@ -217,7 +218,7 @@ iframe {
 
 .go-to-program-input-button{
   display:block;
-  width:15%;
+  width:30%;
   position:relative;
   font-style:normal;
   font-weight:normal;

@@ -22,3 +22,27 @@ appFactories.factory('$localstorage', ['$window', function($window) {
   }
 }]);
 
+appFactories.factory('accountHelpers', ['$localstorage', function($localstorage) {
+  return {
+    isRemembered: function() {
+      return ($localstorage.get("remember_me", "true") === 'true');
+    },
+    rememberMe: function(rememberMe) {
+      $localstorage.set("remember_me", rememberMe);
+    },
+    setTotalCredits: function(total) {
+      $localstorage.set("total_credits", total);
+    },
+    getTotalCredits: function() {
+      return $localstorage.get("total_credits", "0");
+    },
+    doLogout: function() {
+      $localstorage.delete("jwt");
+    },
+    isAuthenticated: function() {
+      return ($localstorage.get("jwt", "").length > 0);
+    }
+
+  }
+}]);
+

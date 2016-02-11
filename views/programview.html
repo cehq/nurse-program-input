@@ -6,7 +6,7 @@
             <spinner name="programsSpinner" img-src="images/spinner.gif" > Loading...</spinner>
         </div>
 
-    <form class="program-form" ng-controller="ViewFormCtrl">
+    <form class="program-form" ng-controller="ViewFormCtrl" ng-init="doInit()">
 
         <button class="go-to-program-input-button" ng-click="goToProgramInput()" type="submit" >New Program</button>
 

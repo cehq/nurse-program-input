@@ -1,6 +1,19 @@
 var cehqServices = angular.module('cehq.services', []);
 var programData = null;
 
+cehqServices.factory('AuthService', function( messages, appConstants, $http, $q , accountHelpers, $localstorage){
+    return {
+        isAuthenticated: function() {
+            return accountHelpers.isAuthenticated();
+        },
+        logout: function() {
+            return accountHelpers.doLogout();
+        }
+    };
+
+});
+
+
 // all server access is now abstracted in the 'server' object
 cehqServices.factory('server', function( messages, appConstants, $http, $q , $localstorage){
 
@@ -249,8 +262,24 @@ cehqServices.factory('server', function( messages, appConstants, $http, $q , $lo
                   return response;
               });
       },
+      deleteProgram: function(id) {
+          var url = appConstants.BASE_URL + '/service/programs/' + id;
+          console.log('url: ' + url);
+          var myJwt = $localstorage.get("jwt", "");
 
-      submitProgram: function(id, program) {
+          $http.defaults.headers.common.Authorization = 'Bearer ' + myJwt;
+          $http.defaults.headers.common["Content-Type"] = "application/json";
+
+          return $http.delete(url)
+              .then(function successCallback(response) {
+                  alert("success: " + JSON.stringify(response));
+                  return response;
+              }, function errorCallback(response) {
+                  alert("error: " + JSON.stringify(response));
+                  return response;
+              });
+      },
+      submitProgram: function(program) {
 
           // FOR DEV ONLY
           var deferred = $q.defer();

@@ -18,19 +18,19 @@
 
         <div>
             <h3 class="program-name-input-field">Program Name:</h3>
-            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="program.name" />
+            <input class="default-input-field" type="text" id="programNameInputBox" ng-model="program.name" ng-readonly="program['status'].status != 'draft'" />
         </div>
 
         <div>
             <div>
             <h4 class="program-short-name-input-field">Program Short Name:</h4>
-            <input class="default-input-field" type="text" id="programShortNameInputBox" ng-model="program.shortName" />
+            <input class="default-input-field" type="text" id="programShortNameInputBox" ng-model="program.shortName" ng-readonly="program['status'].status != 'draft'"/>
             </div>
             <div class="default-input-field">
                 <span class="hint left float-left">Displayed in the mobile app</span>
 
                 <span class="chars-remain text-right float-right" ng-show="program.shortName.length <= 64">{{64 - program.shortName.length}} chars remaining</span>
-                <span class="over-char-limit text-right float-right" ng-show="program.shortName.length > 64">{{64 - program.shortName.length}} over the limit</span>
+                <span class="over-char-limit text-right float-right" ng-show="program.shortName.length > 64">{{64 - program.shortName.length}} over the recommended limit</span>
             </div>
         </div>
         <div class="objectives">
@@ -40,12 +40,12 @@
                 <li ng-repeat="objItem in program.objectives track by $index">
                     <textarea rows="2" class="default-input-field"
                               ng-value="{{objItem.objective}}"
-                              value="{{objItem.objective}}"
+                              value="{{objItem.objective}}" ng-readonly="program['status'].status != 'draft'"
                            ng-model="program.objectives[$index].objective" > </textarea>
                     <br/>
                     <div class="default-input-field hint">
                         <span class="chars-remain text-right float-right" ng-show="program.objectives[$index].objective.length <= 100">{{100 - program.objectives[$index].objective.length}} chars remaining</span>
-                        <span class="over-char-limit text-right float-right" ng-show="program.objectives[$index].objective.length > 100">{{100 - program.objectives[$index].objective.length}} over the limit</span>
+                        <span class="over-char-limit text-right float-right" ng-show="program.objectives[$index].objective.length > 100">{{100 - program.objectives[$index].objective.length}} over the recommended limit</span>
                     </div>
                 </li>
 
@@ -55,13 +55,13 @@
 
         <div id="program-keywords">
             <h4>Keywords (separated by commas):</h4>
-            <input class="default-input-field" type="text" ng-model="program.keywords" />
+            <input class="default-input-field" type="text" ng-model="program.keywords" ng-readonly="program['status'].status != 'draft'"/>
             <div class="total count">Total Keywords: <span ng-bind="keywordCount(program.keywords)"></span></div>
         </div>
 
         <div>
             <h4>Goal:</h4>
-            <textarea rows="4" class="default-input-field" id="" ng-model="program.goal"> </textarea>
+            <textarea rows="4" class="default-input-field" id="" ng-model="program.goal" ng-readonly="program['status'].status != 'draft'"> </textarea>
         </div>
 
         <accordion close-others="true" >
@@ -74,12 +74,12 @@
 
                 <div>
                     <h5>Learning Assignment Name:</h5>
-                    <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].name" ng-value="{{activity.name}}" />
+                    <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].name" ng-value="{{activity.name}}" ng-readonly="program['status'].status != 'draft'"/>
                 </div>
 
                 <div>
                     <h5>Learning Assignment URL:</h5>
-                    <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].url" ng-value="{{activity.url}}"  />
+                    <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].url" ng-value="{{activity.url}}" ng-readonly="program['status'].status != 'draft'" />
                 </div>
 
                 <div>
@@ -87,18 +87,20 @@
                     <textarea rows="3" class="question-input-field"
                               ng-init=""
                               ng-model="program['learningActivities'][$index]['questions'][0].question"
+                              ng-readonly="program['status'].status != 'draft'"
                               ng-value="{{program['learningActivities'][$index]['questions'][0].question}}"> </textarea>
                     <p class="chars-remain" ng-show="program['learningActivities'][$index]['questions'][0].question.length <= 170">{{170 - program['learningActivities'][$index]['questions'][0].question.length}} chars remaining</p>
-                    <p class="over-char-limit" ng-show="program['learningActivities'][$index]['questions'][0].question.length > 170">{{170 - program['learningActivities'][$index]['questions'][0].question.length}} over the limit</p>
+                    <p class="over-char-limit" ng-show="program['learningActivities'][$index]['questions'][0].question.length > 170">{{170 - program['learningActivities'][$index]['questions'][0].question.length}} over the recommended limit</p>
                 </div>
 
                 <div id="question-type-section" ng-init="qType[{{$index}}]='choice'" >
                     <h5>Question Type</h5>
                     <div class="question-type">
                         <div class="left"><input type="radio" name="qType[{{$index}}]" ng-model="program['learningActivities'][$index]['questions'][0]['questionType']['type']"
-                               value="1" >Multiple Choice</input></div>
-                        <div class="left"><input type="radio" name="qType[{{$index}}]" ng-model="program['learningActivities'][$index]['questions'][0]['questionType']['type']"
-                               value="2" >True/False</input></div>
+                                                 ng-disabled="program['status'].status != 'draft'" value="1" >Multiple Choice</input></div>
+                        <div class="left"><input type="radio" name="qType[{{$index}}]"
+                                                 ng-model="program['learningActivities'][$index]['questions'][0]['questionType']['type']"
+                                                 ng-disabled="program['status'].status != 'draft'" value="2" >True/False</input></div>
                     </div>
                 </div>
 
@@ -107,54 +109,68 @@
                     <div>
                         <span><p>Choice #1 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 0" class="right-answer">(correct)</span></p>
                             <input type="radio"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="0"/>
 
                             <input class="default-input-field" type="text"
+                                   ng-readonly="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][0].choice"/></span>
                         <span><p>Choice #2 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 1" class="right-answer">(correct)</span></p>
                             <input type="radio"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="1"/>
 
                             <input class="default-input-field" type="text"
+                                   ng-readonly="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][1].choice"/></span>
 
                         <span><p>Choice #3 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 2" class="right-answer">(correct)</span></p>
                             <input type="radio"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="2" />
 
                             <input class="default-input-field" type="text"
+                                   ng-readonly="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][2].choice"/></span>
 
                         <span><p>Choice #4 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 3" class="right-answer">(correct)</span></p>
                             <input type="radio"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="3"/>
 
                             <input class="default-input-field" type="text"
+                                   ng-readonly="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][3].choice"/></span>
                         <span><p>Choice #5 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 4" class="right-answer">(correct)</span></p>
                             <input type="radio"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="4"/>
 
                             <input class="default-input-field" type="text"
+                                   ng-readonly="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][4].choice"/></span>
 
                         <span><p>Choice #6 <span ng-show="program['learningActivities'][$index]['questions'][0].answer == 5" class="right-answer">(correct)</span></p>
                             <input type="radio"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0].answer" value="5"/>
 
                             <input class="default-input-field" type="text"
+                                   ng-readonly="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['questionChoices'][5].choice"/></span>
                     </div>
 
-                    <div class="hint">Select the correct answer with the radio button on the left</div>
+                    <div ng-hide="program['status'].status != 'draft'" class="hint">Select the correct answer with the radio button on the left</div>
                 </div>
                 <div class="answer-area" ng-show="program['learningActivities'][$index]['questions'][0]['questionType']['type'] == '2'">
                     <div>Select the correct answer</div>
                     <div>
                         <span>
                             <input type="radio" name="tfIsAnswer[{{$index}}]"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['tf']" value="1">True</input>
                             <input type="radio" name="tfIsAnswer[{{$index}}]"
+                                   ng-disabled="program['status'].status != 'draft'"
                                    ng-model="program['learningActivities'][$index]['questions'][0]['tf']" value="0">False</input>
                         </span>
                     </div>
@@ -166,9 +182,11 @@
 
         <button ng-show="program['status'].status == 'draft'" class="program-button delete-program-button" ng-click="cehqModal('deleteDraft')" ng-controller="InputFormCtrl" type="submit" >Delete Draft</button>
         <button ng-show="program['status'].status == 'draft'" class="program-button draft-program-button" ng-click="cehqModal('saveDraft')" ng-controller="InputFormCtrl" type="submit" >Save Draft</button>
-        <button ng-show="program['status'].status == 'draft'" class="program-button submit-program-button" ng-click="cehqModal('submitDraft')" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
-        <button ng-show="program['status'].status == 'submitted'" class="program-button send-program-button" ng-click="cehqModal('acceptProgram')" ng-controller="InputFormCtrl" type="submit" >Accept Program</button>
-        <button ng-show="program['status'].status == 'accepted'" class="program-button send-program-button" ng-click="cehqModal('unpublishProgram')" ng-controller="InputFormCtrl" type="submit" >Unpublish</button>
+        <button ng-show="program.id > 0 && program['status'].status == 'draft'" class="program-button submit-program-button" ng-click="cehqModal('submitDraft')" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
+        <button ng-show="program['status'].status == 'submitted' || program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('backDraft')" ng-controller="InputFormCtrl" type="submit" >Back to Draft</button>
+        <button ng-show="program['status'].status == 'submitted'" class="program-button send-program-button" ng-click="cehqModal('reviewProgram')" ng-controller="InputFormCtrl" type="submit" >Review Program</button>
+        <button ng-show="program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('acceptProgram')" ng-controller="InputFormCtrl" type="submit" >Accept Program</button>
+        <button ng-show="program['status'].status == 'accepted'" class="program-button send-program-button" ng-click="cehqModal('archiveProgram')" ng-controller="InputFormCtrl" type="submit" >Archive</button>
 
         <div>
             <button class="back-button" ng-click="goToProgramView('/programview')" type="Button">back</button>

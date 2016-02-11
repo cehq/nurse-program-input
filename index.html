@@ -27,11 +27,21 @@
   <link rel="icon" sizes="192x192" type="image/png" href="images/cehq-icons/android-chrome-192x192.png">
 
   <title>myCEHQ</title>
-  <script src="lib/angular.min.js"></script>
+    <!-- angularjs js -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-resource.min.js"></script>
+    <script src="lib/angular/angular-sanitize.min.js"></script>
+    <script src="lib/angular-ui/angular-ui-router.min.js"></script>
+
+  <!--<script src="lib/angular.min.js"></script>
+    <script src="lib/angular-route.js"></script>
+  -->
+
   <script src="lib/ui-bootstrap-tpls.min.js"></script>
   <script src="lib/smart-table.min.js"></script>
-  <script src="lib/angular-route.js"></script>
+
   <script src="lib/angular-spinners.min.js"></script>
+
   <script src="scripts/factories.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers.js"></script>
@@ -40,59 +50,62 @@
 
 </head>
 
-<body ng-app="cehqApp" ng-controller="NavBarCtrl">
+<body ng-app="cehqApp" ng-controller="NavBarCtrl" ng-init="checkAuth()">
 
-<a href="#/mainMenuItems[0].page" ng-click="toggleMenu(mainMenuItems[0].page)">
-  <img class="logo desktop-show menu-link" src="images/cehq-logo-transparent.png">
-</a>
+    <a ng-hide="isAuth()" href="#/mainMenuItems[0].page" ng-click="toggleMenu(mainMenuItems[0].page)">
+      <img class="logo desktop-show menu-link" src="images/cehq-logo-transparent.png">
+    </a>
 
-<nav class="navbar navbar-default">
+    <nav class="navbar navbar-default">
 
-  <div class="container-fluid">
+      <div class="container-fluid">
 
-    <div class="navbar-header">
+        <div class="navbar-header">
 
-      <button type="button" class="navbar-toggle collapsed" ng-click="toggleMenu()">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+          <button type="button" class="navbar-toggle collapsed" ng-click="toggleMenu()">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
 
-      <a href="#/mainMenuItems[0].page" ng-click="toggleMenu(mainMenuItems[0].page)">
-        <img src="images/cehq-logo-transparent-small.png"
-             class="menu-link navbar-brand img-small nav-logo navbar-toggle collapsed">
-      </a>
+          <a href="#/mainMenuItems[0].page" ng-click="toggleMenu(mainMenuItems[0].page)">
+            <img src="images/cehq-logo-transparent-small.png"
+                 class="menu-link navbar-brand img-small nav-logo navbar-toggle collapsed">
+          </a>
 
-    </div>
+        </div>
 
-    <div class="collapse navbar-collapse" collapse="isCollapsed">
+        <div class="collapse navbar-collapse" collapse="isCollapsed">
 
-      <ul class="nav navbar-nav navbar-left">
-        <li class="menu-link" ng-class="isCurrentPage(menuItem.page)" ng-repeat="menuItem in mainMenuItems">
-          <a ng-click="toggleMenu(menuItem.page)" href="#/{{menuItem.page}}">{{menuItem.label}}</a>
-        </li>
-      </ul>
+          <ul class="nav navbar-nav navbar-left" ng-show="isAuth()">
+            <li class="menu-link">
+                <a href="#/programview">Program Management</a>
+            </li>
+          </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="menu-link" ng-click="openModal(menuItem.page)" ng-repeat="menuItem in rightMenuItems">
-          <a>{{menuItem.label}}</a>
-        </li>
-      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="menu-link" ng-hide="isAuth()">
+              <a href="#/login">Login</a>
+            </li>
+              <li class="menu-link" ng-show="isAuth()">
+                  <a ng-click="logout()">Logout</a>
+              </li>
+          </ul>
 
-    </div>
+        </div>
 
-  </div>
+      </div>
 
-</nav>
+    </nav>
 
-<article class="main-article">
+    <article class="main-article">
 
-  <div ng-view></div>
+      <div ui-view></div>
 
-</article>
+    </article>
 
-<ng-include src="'views/footer.html'"/>
+    <ng-include ng-hide="isAuth()" src="'views/footer.html'"/>
 
 
 </body>
