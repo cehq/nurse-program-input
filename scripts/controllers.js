@@ -209,6 +209,17 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     document.getElementById('programNameInputBox').value = "";
   };
 
+    $scope.addObjective = function () {
+        new_objective = {"objective": " ","order": $scope.program.objectives.length + 1};
+        console.log(JSON.stringify(new_objective));
+        $scope.program.objectives.push(new_objective);
+    }
+    $scope.addLearningActivity = function () {
+        new_activity = {"name": "New Activity"};
+        console.log(JSON.stringify(new_activity));
+        $scope.program['learningActivities'].push(new_activity);
+    }
+
   //Constructs JSON object from the input field values. This gets called just before the object is sent to the server
   $scope.createJSON = function () {
     $scope.program.name = $scope.programName;

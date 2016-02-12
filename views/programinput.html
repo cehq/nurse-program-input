@@ -50,7 +50,10 @@
                 </li>
 
             </ul>
-
+            <div>
+                <button class="center" ng-click="addObjective()" type="Button">Add Objective</button>
+            </div>
+            <hr/>
         </div>
 
         <div id="program-keywords">
@@ -179,6 +182,11 @@
                 </div>
             </accordion-group>
         </accordion>
+
+        <div>
+            <button class="center" ng-click="addLearningActivity()" type="Button">Add Learning Activity</button>
+        </div>
+        <hr/>
 
         <button ng-show="program['status'].status == 'draft'" class="program-button delete-program-button" ng-click="cehqModal('deleteDraft')" ng-controller="InputFormCtrl" type="submit" >Delete Draft</button>
         <button ng-show="program['status'].status == 'draft'" class="program-button draft-program-button" ng-click="cehqModal('saveDraft')" ng-controller="InputFormCtrl" type="submit" >Save Draft</button>
