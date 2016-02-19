@@ -1,13 +1,10 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "main": "index.html",
-  "window": {
-    "title": "node-webkit demo",
-    "icon": "link.png",
-    "toolbar": false,
-    "frame": true,
-    "width": 1200,
-    "height": 800
-  }
+    "name": "CEHQ SME Tool",
+    "version": "0.0.1",
+    "devDependencies": {
+        "gulp": "^3.9.1",
+        "gulp-file": "^0.2.0",
+        "gulp-s3": "^0.3.0",
+        "replace": "^0.3.0"
+    }
 }

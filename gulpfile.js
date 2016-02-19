@@ -1,80 +1,39 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var bower = require('bower');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
 
-var paths = {
-    sass: ['./scss/**/*.scss']
-};
-
-gulp.task('default', ['sass']);
-
-gulp.task('sass', function(done) {
-    gulp.src('./scss/ionic.app.scss')
-        .pipe(sass({
-            errLogToConsole: true
-        }))
-        .pipe(gulp.dest('./www/css/'))
-        .pipe(minifyCss({
-            keepSpecialComments: 0
-        }))
-        .pipe(rename({
-            extname: '.min.css'
-        }))
-        .pipe(gulp.dest('./www/css/'))
-        .on('end', done);
-});
-
-gulp.task('watch', function() {
-    gulp.watch(paths.sass, ['sass']);
-});
-
-gulp.task('install', ['git-check'], function() {
-    return bower.commands.install()
-        .on('log', function(data) {
-            gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-        });
-});
-
-gulp.task('git-check', function(done) {
-    if (!sh.which('git')) {
-        console.log(
-            '  ' + gutil.colors.red('Git is not installed.'),
-            '\n  Git, the version control system, is required to download Ionic.',
-            '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-            '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-        );
-        process.exit(1);
-    }
-    done();
-});
 
 // `npm install --save replace`
 var replace = require('replace');
 var replaceFiles = ['./www/scripts/constants.js'];
 
+var file = require('gulp-file');
+var setUrl = function(url) {
+    return file('base.js', 'BASE_URL="' + url + '"', {
+            src: true
+        })
+        .pipe(gulp.dest('./www/scripts/'))
+};
+
 gulp.task('add-proxy', function() {
-    return replace({
+    setUrl("http://localhost:8100");
+    /*return replace({
         regex: "http://54.191.240.64:8080",
         replacement: "http://localhost:8100",
         paths: replaceFiles,
         recursive: false,
         silent: false,
-    });
+    });*/
 });
 
 gulp.task('remove-proxy', function() {
-    return replace({
+    setUrl("http://54.191.240.64:8080");
+    /*return replace({
         regex: "http://localhost:8100",
         replacement: "http://54.191.240.64:8080",
         paths: replaceFiles,
         recursive: false,
         silent: false,
-    });
+    });*/
 });
 
 
@@ -98,4 +57,18 @@ gulp.task('aws-dev', function() {
         recursive: false,
         silent: false,
     });
+});
+
+
+
+gulp.task('aws-server', function() {
+    setUrl("http://sme.mycehq.com");
+});
+
+var fs = require('fs');
+var s3 = require("gulp-s3");
+gulp.task("upload", ['aws-server'], function() {
+    aws = JSON.parse(fs.readFileSync('./aws.json'));
+    gulp.src('./www/**')
+        .pipe(s3(aws));
 });

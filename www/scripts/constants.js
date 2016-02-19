@@ -67,16 +67,6 @@ cehqConstants.constant('appConstants', {
     REQUEST_TIMEOUT: 5000, // AJAX Request timeout in ms
 
     REQUEST_COMPLETE: 4,
-    REQUEST_SUCCESS: 200,
-
-    //BASE_URL: 'http://localhost:9000/cehq'
-
-    //BASE_URL: 'http://54.68.24.128:80/cehq'
-
-    // LOCAL DEV
-    //BASE_URL: 'http://localhost:8080'
-
-    BASE_URL: 'http://localhost:8100'
-
+    REQUEST_SUCCESS: 200
 
 });
