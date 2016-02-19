@@ -393,18 +393,6 @@ cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $mo
         });
     };
 
-  $scope.unpublishProgramOk = function () {
-    // TODO: Now SAVE and then do something
-    $modalInstance.close();
-
-    server.unpublishProgram($scope.id, $scope.program).then(function (program) {
-      //$scope.program.program_status = "submitted";
-      console.log("unpublishProgramOk complete");
-      $scope.goToProgramView();
-    });
-
-  };
-
     $scope.deleteDraftOk = function () {
         // TODO: Now SAVE and then do something
         $modalInstance.close();

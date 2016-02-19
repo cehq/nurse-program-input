@@ -282,59 +282,12 @@ cehqServices.factory('server', function(messages, appConstants, $http, $q, $loca
 
             return $http.delete(url)
                 .then(function successCallback(response) {
-                    alert("success: " + JSON.stringify(response));
+                    //alert("success: " + JSON.stringify(response));
                     return response;
                 }, function errorCallback(response) {
                     alert("error: " + JSON.stringify(response));
                     return response;
                 });
-        },
-        submitProgram: function(program) {
-
-            // FOR DEV ONLY
-            var deferred = $q.defer();
-
-            for (i = 0; i < programData.length; i++) {
-
-                if (programData[i].id == id) {
-                    console.log("SVC submitProgram; found status: " + programData[i].program_status);
-                    programData[i].program_status = "submitted";
-                }
-            }
-            deferred.resolve(program);
-            return deferred.promise;
-        },
-
-        acceptProgram: function(id, program) {
-
-            // FOR DEV ONLY
-            var deferred = $q.defer();
-
-            for (i = 0; i < programData.length; i++) {
-
-                if (programData[i].id == id) {
-                    console.log("SVC acceptProgram; found status: " + programData[i].program_status);
-                    programData[i].program_status = "accepted";
-                }
-            }
-            deferred.resolve(program);
-            return deferred.promise;
-        },
-
-        unpublishProgram: function(id, program) {
-
-            // FOR DEV ONLY
-            var deferred = $q.defer();
-
-            for (i = 0; i < programData.length; i++) {
-
-                if (programData[i].id == id) {
-                    console.log("SVC unpublishProgram; found status: " + programData[i].program_status);
-                    programData[i].program_status = "submitted";
-                }
-            }
-            deferred.resolve(program);
-            return deferred.promise;
         }
     };
 
