@@ -36,8 +36,9 @@
         <div class="objectives">
             <h4>Objectives:</h4>
             <!-- <input class="default-input-field" type="text" id="" ng-model="" />-->
-            <ul class="list-unstyled">
+            <ol class="list-unstyled">
                 <li ng-repeat="objItem in program.objectives track by $index">
+                    <span class="field-count">{{$index + 1}})</span>
                     <textarea rows="2" class="default-input-field"
                               ng-value="{{objItem.objective}}"
                               value="{{objItem.objective}}" ng-readonly="program['status'].status != 'draft'"
@@ -49,7 +50,7 @@
                     </div>
                 </li>
 
-            </ul>
+            </ol>
             <div>
                 <button ng-show="program['status'].status == 'draft'" class="center" ng-click="addObjective()" type="Button">Add Objective</button>
             </div>
@@ -76,17 +77,24 @@
                 </accordion-heading>
 
                 <div>
-                    <h5>Learning Assignment Name:</h5>
+                    <h5>Learning Activity Name:</h5>
                     <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].name" ng-value="{{activity.name}}" ng-readonly="program['status'].status != 'draft'"/>
                 </div>
 
                 <div>
-                    <h5>Learning Assignment URL:</h5>
-                    <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].url" ng-value="{{activity.url}}" ng-readonly="program['status'].status != 'draft'" />
+                    <h5>Learning Activity URL:</h5>
+                    <textarea rows="3" class="default-input-field {{program['learningActivities'][$index].validCSS}}"
+                              ng-model="program['learningActivities'][$index].url"
+                              ng-value="{{activity.url}}"
+                              ng-readonly="program['status'].status != 'draft'"
+                              ng-blur="checkURLExists(program['learningActivities'][$index])"> </textarea>
+<!--
+                    <input class="default-input-field" type="text" ng-model="program['learningActivities'][$index].url" ng-value="{{activity.url}}" ng-readonly="program['status'].status != 'draft'" />-->
+
                 </div>
 
                 <div>
-                    <h5>Learning Assignment Question:</h5>
+                    <h5>Learning Activity Question:</h5>
                     <textarea rows="3" class="question-input-field"
                               ng-init=""
                               ng-model="program['learningActivities'][$index]['questions'][0].question"

@@ -288,6 +288,22 @@ cehqServices.factory('server', function(messages, appConstants, $http, $q, $loca
                     alert("error: " + JSON.stringify(response));
                     return response;
                 });
+        },
+        checkLAUrl: function(url) {
+
+            delete $http.defaults.headers.common.Authorization;
+            $http.defaults.headers.common["Content-Type"] = "text/html";
+
+            return $http.head(url)
+                .then(function successCallback(response) {
+                    //alert("success: " + JSON.stringify(response));
+                    //alert("success: " + response.data + " ; status: " + response.status +             " ; headers: " + response.headers + " ; config: " + JSON.stringify(response.config));
+
+                    return response;
+                }, function errorCallback(response) {
+                    //alert("error: " + JSON.stringify(response));
+                    return response;
+                });
         }
     };
 

@@ -360,6 +360,11 @@ accordion .panel-title {
     float: right;
 }
 
+.field-count {
+    vertical-align: top;
+    font-size: 18px;
+}
+
 #question-type-section {
   padding-top: 10px;
 }

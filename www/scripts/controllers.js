@@ -196,8 +196,11 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 
       } else {// NEW Program, set defaults
         $scope.program = { "id" : "", "name" : ""  };
+        $scope.program.goal = "The goal of this activity is to provide information on the pathophysiology, diagnosis, treatment and nursing interventions for patients with ";
         $scope.program['status'] = {"id": 1, "status": "draft"};
-        $scope.program.objectives = [{"objective": " ","order": 1}, {"objective": " ","order": 2}, {"objective": " ","order": 3}];
+        $scope.program.objectives = [{"objective": "Discuss the pathophysiology of ","order": 1},
+                                     {"objective": "Describe the signs and symptoms of ","order": 2},
+                                     {"objective": "Develop safe and effective care plans for ","order": 3}];
         $scope.program['learningActivities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
           //$scope.program['learningActivities'][i]['questions'][0]
         $scope.qType = {};
@@ -232,6 +235,19 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     var s = text ? text.split(/[^,\s][^\,]*[^,\s]*/) : 0;
     return s ? s.length-1 : 0;
   };
+
+    $scope.checkURLExists = function(item) {
+        console.log("Validate URL: " + item.url) ;
+        server.checkLAUrl(item.url).then(function (retData) {
+            console.log(JSON.stringify(retData));
+            if(retData.status == 200) {
+                item.validCSS = "good-url";
+            } else {
+                item.validCSS = "bad-url";
+            }
+
+        });
+    };
 
   $scope.sendPost = function() {
     $scope.createJSON();
