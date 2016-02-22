@@ -10,15 +10,15 @@ cehqApp.run(function ($rootScope, $state, AuthService) {
     });
 });
 
-cehqApp.config(function($stateProvider, $urlRouterProvider){
+cehqApp.config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
     console.log('config');
-    //$httpProvider.defaults.useXDomain = true;
-    //$httpProvider.defaults.withCredentials = true;
-    //delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-    // TODO: this is to allow CORS access this mechanism is not recommended
-    //$sceProvider.enabled(false);
+    $httpProvider.defaults.cache = false;
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};
+    }
+    // disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
 
     $stateProvider
 
@@ -50,14 +50,16 @@ cehqApp.config(function($stateProvider, $urlRouterProvider){
             url: '/programinput',
             templateUrl: 'views/programinput.html',
             controller: 'InputFormCtrl',
-            authenticate: true
+            authenticate: true,
+            cache: false
 
         })
         .state('programinput.detail', {
             url: '/programinput/:id',
             templateUrl: 'views/programinput.html',
             controller: 'InputFormCtrl',
-            authenticate: true
+            authenticate: true,
+            cache: false
 
         })
 

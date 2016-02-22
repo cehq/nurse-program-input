@@ -74,8 +74,8 @@ cehqControllers.controller('SignInCtrl', function ($scope, $state, server, AuthS
   console.log('SignInCtrl');
 
   $scope.vm = {};
-  $scope.vm.username = $localstorage.get("email", "joe-nurse");
-  $scope.vm.password = $localstorage.get("password", "joe1234");
+  $scope.vm.username = $localstorage.get("email", "");
+  $scope.vm.password = ""; //$localstorage.get("password", "");
   $scope.vm.rememberMe = ($localstorage.get("remember_me", "true") === 'true');
 
   $scope.login = function () {
@@ -86,6 +86,9 @@ cehqControllers.controller('SignInCtrl', function ($scope, $state, server, AuthS
         alert("ERROR - Bad username or password");
       } else if (userLogin.status === 200) {
         $localstorage.set("jwt", userLogin.data.jwt);
+          if($scope.vm.rememberMe) {
+              $localstorage.set("email", $scope.vm.username);
+          }
           $scope.isAuthenticated = AuthService.isAuthenticated();
           $state.go('programview');
 
