@@ -4,15 +4,15 @@
   "proxies": [
     {
       "path": "/service/programs/names",
-      "proxyUrl": "http://localhost:8080/service/programs/names"
+      "proxyUrl": "http://54.191.240.64:8080/service/programs/names"
     },
     {
       "path": "/service/login",
-      "proxyUrl": "http://localhost:8080/service/login"
+      "proxyUrl": "http://54.191.240.64:8080/service/login"
     },
      {
        "path": "/service/programs",
-       "proxyUrl": "http://localhost:8080/service/programs"
+       "proxyUrl": "http://54.191.240.64:8080/service/programs"
      }
   ]
 

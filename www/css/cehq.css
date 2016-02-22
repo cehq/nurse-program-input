@@ -498,7 +498,7 @@ tbody > tr,
 }
 
 .program-list th, .program-list tbody td {
-    width: 100%;
+    width: 80%;
     overflow-x: hidden;
     text-overflow: ellipsis;
 }

@@ -260,7 +260,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
 
 });
 
-cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $modalInstance, server, program) {
+cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $modalInstance, server, program, $localstorage) {
   $scope.program = program;
   $scope.id = $scope.program.id;
 
@@ -328,6 +328,7 @@ cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $mo
       console.log("save draft data: " + JSON.stringify(cleanedProgram));
       if (cleanedProgram.id) {
           console.log("updateProgram");
+          $localstorage.set("save_update","true");
           server.updateProgram(cleanedProgram).then(function (retData) {
               //JMS TODO: Problem with Save-Continue - The INITIAL Program (in memory) is modified to be able to
               //  send to web service; Can't use the first version because LA may be messed up (not initialized correctly)
@@ -337,18 +338,19 @@ cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $mo
           });
       } else {
           console.log("addProgram");
+          $localstorage.set("save_update","true");
           server.addProgram(cleanedProgram).then(function (retData) {
               console.log(JSON.stringify(retData));
           });
       }
 
-    $modalInstance.close();
+      $modalInstance.close();
 
       if (doContinue) { // Save and Continue
           //angular.copy(masterData, $scope.program);
       } else {
-          $scope.goToProgramView();
-      }
+                  $scope.goToProgramView();
+          }
 
   };
 
@@ -414,11 +416,22 @@ cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $mo
   };
 });
 
-cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $state, server, AuthService, spinnerService) {
+cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $state,
+                                                     server, AuthService, spinnerService, $localstorage, $timeout) {
 
     $scope.doInit = function () {
         $scope.isAuthenticated = AuthService.isAuthenticated();
-        $scope.loadAllPrograms();
+        $scope.setLoading(true);
+
+        // If Save or Update, play with timing of Asynch call so View shows correct data.
+        if($localstorage.get("save_update", "false") === "true") {
+            $timeout(function() {
+                $localstorage.delete("save_update");
+                $scope.loadAllPrograms();
+            }, 2500);
+        } else {
+            $scope.loadAllPrograms();
+        }
 
         // Simulating big list
         /*$scope.displayedDraftCollection = [];
@@ -447,13 +460,10 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $
       console.log("selectedProgram: " + row.id);
         var result = { id: row.id };
         $state.go("programinput.detail", result);
-      //$location.path("programinput/" + row.id);
     } else {
         $state.go("programinput");
-      //$location.path("programinput");
     }
   };
-
 
     $scope.showMe = function(id){
         alert(id);
@@ -469,7 +479,7 @@ cehqControllers.controller('ViewFormCtrl', function ($scope, $http, $location, $
 
     $scope.loadAllPrograms = function() {
         console.log("loadAllPrograms");
-        $scope.setLoading(true);
+        //$scope.setLoading(true);
         server.getPrograms("draft").then(function (programs) {
             //$scope.draftTablesItems = $scope.draftTablesItems.concat(programs.data);
             //$scope.displayedDraftCollection = $scope.displayedDraftCollection.concat(programs.data);
