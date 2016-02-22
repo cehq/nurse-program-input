@@ -11,8 +11,8 @@
       "proxyUrl": "http://54.191.240.64:8080/service/login"
     },
      {
-       "path": "/service/programs",
-       "proxyUrl": "http://54.191.240.64:8080/service/programs"
+       "path": "/service",
+       "proxyUrl": "http://54.191.240.64:8080/service"
      }
   ]
 

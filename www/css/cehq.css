@@ -365,6 +365,14 @@ accordion .panel-title {
     font-size: 18px;
 }
 
+input[type="text"].good-url, textarea.good-url{
+    background-color : #c8e5bc;
+}
+
+input[type="text"].bad-url, textarea.bad-url{
+    background-color : #e4b9b9;
+}
+
 #question-type-section {
   padding-top: 10px;
 }

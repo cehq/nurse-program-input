@@ -291,10 +291,14 @@ cehqServices.factory('server', function(messages, appConstants, $http, $q, $loca
         },
         checkLAUrl: function(url) {
 
-            delete $http.defaults.headers.common.Authorization;
-            $http.defaults.headers.common["Content-Type"] = "text/html";
+            var url = BASE_URL + '/service/checkUrl?url=' + url;
+            console.log('url: ' + url);
+            var myJwt = $localstorage.get("jwt", "");
 
-            return $http.head(url)
+            $http.defaults.headers.common.Authorization = 'Bearer ' + myJwt;
+            $http.defaults.headers.common["Content-Type"] = "application/json";
+
+            return $http.get(url)
                 .then(function successCallback(response) {
                     //alert("success: " + JSON.stringify(response));
                     //alert("success: " + response.data + " ; status: " + response.status +             " ; headers: " + response.headers + " ; config: " + JSON.stringify(response.config));

@@ -237,9 +237,12 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
   };
 
     $scope.checkURLExists = function(item) {
+        if (!item.url || item.url.trim().length <= 0) {
+            return;
+        }
         console.log("Validate URL: " + item.url) ;
         server.checkLAUrl(item.url).then(function (retData) {
-            console.log(JSON.stringify(retData));
+            //console.log(JSON.stringify(retData));
             if(retData.status == 200) {
                 item.validCSS = "good-url";
             } else {
