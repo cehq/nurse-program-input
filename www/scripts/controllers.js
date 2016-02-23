@@ -1,6 +1,7 @@
 var masterProgram;
 
-var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants','cehq.services', 'app.factories','smart-table','angularSpinners']);
+var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants', 'cehq.services',
+                                                         'app.factories','smart-table','angularSpinners', 'ngMessages']);
 
 
 cehqControllers.controller('NavBarCtrl', function ($scope,
@@ -263,18 +264,21 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
     });*/
   };
 
-  $scope.cehqModal = function(name) {
-    $scope.modalInstance = $modal.open({
-      templateUrl: 'modals/' + name + '.html',
-      controller: 'ModalCtrl',
-      size: 's',
-      scope: $scope,
-      resolve: {
-        program: function () {
-          return $scope.program;
-        }
+  $scope.cehqModal = function(name, formValid) {
+      //alert("INSIDE cehqModal: " + formValid);
+      if (true) { //formValid) {
+          $scope.modalInstance = $modal.open({
+              templateUrl: 'modals/' + name + '.html',
+              controller: 'ModalCtrl',
+              size: 's',
+              scope: $scope,
+              resolve: {
+                  program: function () {
+                      return $scope.program;
+                  }
+              }
+          });
       }
-    });
   };
 
 });
@@ -286,10 +290,14 @@ cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $mo
     var cleanProgram = function(program) {
         //console.log("learningActivities: " + $scope.program['learningActivities'].length);
         for (i = 0; i < program['learningActivities'].length; i++) {
+
+            theActivity = program['learningActivities'][i];
             if (program['learningActivities'][i]['questions'] && program['learningActivities'][i]['questions'].length > 0) {
-                //console.log("learningActivities: " + program['learningActivities'][i].name);
-                if (program['learningActivities'][i]['questions'][0]['questionType']['type'] == 1) { // Handle Multiple Choice
-                    console.log("Multiple Choice");
+                //console.log("learningActivities: " + program['learningActivities'][i]['questions'][0]['questionType']);
+                if (typeof theActivity['questions'][0]['questionType'] !== 'undefined' &&
+                    theActivity['questions'][0]['questionType'] !== null &&
+                    theActivity['questions'][0]['questionType']['type'] == 1) { // Handle Multiple Choice
+                    //console.log("Multiple Choice");
                     if (program['learningActivities'][i]['questions'][0] && program['learningActivities'][i]['questions'][0]['questionChoices']) {
                         console.log("Question choices: " + JSON.stringify(program['learningActivities'][i]['questions'][0]['questionChoices']));
 

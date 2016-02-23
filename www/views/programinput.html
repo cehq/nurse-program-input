@@ -5,7 +5,7 @@
         <spinner name="programSpinner" img-src="images/spinner.gif" > Loading...</spinner>
     </div>
 
-    <form name="program-input-form" class="program-form" ng-controller="InputFormCtrl" ng-init="doInit()">
+    <form name="programInputForm" class="program-form" ng-controller="InputFormCtrl" ng-init="doInit()">
 
         <div>
             <button class="back-button" ng-click="goToProgramView('/programview')" type="Button">back</button>
@@ -70,8 +70,8 @@
 
         <accordion close-others="true" >
             <accordion-group  is-open="false"
-                              ng-repeat="activity in program['learningActivities'] track by $index"
-                              >
+                              ng-repeat="activity in program['learningActivities'] track by $index">
+
                 <accordion-heading class="activity-name">
                     {{activity.name}}
                 </accordion-heading>
@@ -103,6 +103,7 @@
                     <p class="chars-remain" ng-show="program['learningActivities'][$index]['questions'][0].question.length <= 170">{{170 - program['learningActivities'][$index]['questions'][0].question.length}} chars remaining</p>
                     <p class="over-char-limit" ng-show="program['learningActivities'][$index]['questions'][0].question.length > 170">{{170 - program['learningActivities'][$index]['questions'][0].question.length}} over the recommended limit</p>
                 </div>
+                <div ng-show="program['learningActivities'][$index]['questions'][0].question.length > 0">
 
                 <div id="question-type-section" ng-init="qType[{{$index}}]='choice'" >
                     <h5>Question Type</h5>
@@ -111,7 +112,7 @@
                                                  ng-disabled="program['status'].status != 'draft'" value="1" >Multiple Choice</input></div>
                         <div class="left"><input type="radio" name="qType[{{$index}}]"
                                                  ng-model="program['learningActivities'][$index]['questions'][0]['questionType']['type']"
-                                                 ng-disabled="program['status'].status != 'draft'" value="2" >True/False</input></div>
+                                                 ng-disabled="program['status'].status != 'draft'" value="2">True/False</input></div>
                     </div>
                 </div>
 
@@ -188,6 +189,7 @@
 
 
                 </div>
+                </div>
             </accordion-group>
         </accordion>
 
@@ -196,13 +198,13 @@
         </div>
         <hr/>
 
-        <button ng-show="program['status'].status == 'draft'" class="program-button delete-program-button" ng-click="cehqModal('deleteDraft')" ng-controller="InputFormCtrl" type="submit" >Delete Draft</button>
-        <button ng-show="program['status'].status == 'draft'" class="program-button draft-program-button" ng-click="cehqModal('saveDraft')" ng-controller="InputFormCtrl" type="submit" >Save Draft</button>
-        <button ng-show="program.id > 0 && program['status'].status == 'draft'" class="program-button submit-program-button" ng-click="cehqModal('submitDraft')" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
-        <button ng-show="program['status'].status == 'submitted' || program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('backDraft')" ng-controller="InputFormCtrl" type="submit" >Move to Draft</button>
-        <button ng-show="program['status'].status == 'submitted'" class="program-button send-program-button" ng-click="cehqModal('reviewProgram')" ng-controller="InputFormCtrl" type="submit" >Move to Review</button>
-        <button ng-show="program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('acceptProgram')" ng-controller="InputFormCtrl" type="submit" >Accept Program</button>
-        <button ng-show="program['status'].status == 'accepted'" class="program-button send-program-button" ng-click="cehqModal('archiveProgram')" ng-controller="InputFormCtrl" type="submit" >Archive</button>
+        <button ng-show="program['status'].status == 'draft'" class="program-button delete-program-button" ng-click="cehqModal('deleteDraft', true)" ng-controller="InputFormCtrl" type="submit" >Delete Draft</button>
+        <button ng-show="program['status'].status == 'draft'" class="program-button draft-program-button" ng-click="cehqModal('saveDraft', programInputForm.$valid)" ng-controller="InputFormCtrl" type="submit" >Save Draft</button>
+        <button ng-show="program.id > 0 && program['status'].status == 'draft'" class="program-button submit-program-button" ng-click="cehqModal('submitDraft', programInputForm.$valid)" ng-controller="InputFormCtrl" type="submit" >Submit Program</button>
+        <button ng-show="program['status'].status == 'submitted' || program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('backDraft', true)" ng-controller="InputFormCtrl" type="submit" >Move to Draft</button>
+        <button ng-show="program['status'].status == 'submitted'" class="program-button send-program-button" ng-click="cehqModal('reviewProgram', true)" ng-controller="InputFormCtrl" type="submit" >Move to Review</button>
+        <button ng-show="program['status'].status == 'reviewed'" class="program-button send-program-button" ng-click="cehqModal('acceptProgram', true)" ng-controller="InputFormCtrl" type="submit" >Accept Program</button>
+        <button ng-show="program['status'].status == 'accepted'" class="program-button send-program-button" ng-click="cehqModal('archiveProgram', true)" ng-controller="InputFormCtrl" type="submit" >Archive</button>
 
         <div>
             <button class="back-button" ng-click="goToProgramView('/programview')" type="Button">back</button>
