@@ -308,6 +308,41 @@ cehqServices.factory('server', function(messages, appConstants, $http, $q, $loca
                     //alert("error: " + JSON.stringify(response));
                     return response;
                 });
+        },
+        articleSearch: function(searchString) {
+
+            var includeBMJ = ($localstorage.get("include_bmj", "true") === 'true');
+            var includeCK = ($localstorage.get("include_clinical_key", "true") === 'true');
+
+            searchFinal = searchString.replace(/\s+/g, "+%2Btitle%3A");
+            console.log('searchSites: ' + searchFinal);
+
+
+            var url = BASE_URL + "/search/select?q=%2Btitle%3A" + searchFinal; // + "%22";
+            if (!includeBMJ) {
+                url = url + '+-url:"bmj.com"';
+            }
+            if (!includeCK) {
+                url = url + '+-url:"clinicalkey.com"';
+                // DEV TEST HERE
+                //url = url + '+-url:"cdc.gov"';
+            }
+            url = url + "&fl=title%2Curl%2Ctstamp&wt=json&rows=200";
+            // EXTRA:  ?q=ionic&fl=title%2Curl&wt=json&indent=true
+
+            console.log('searchSites: ' + url);
+
+            return $http.get(url)
+                .then(function successCallback(response) {
+                   // alert("success: " + JSON.stringify(response));
+                    return response;
+                }, function errorCallback(response) {
+                    return response;
+                });
+
+
+            //return $http.get('data/sites.json');
+            //return mockURLs;
         }
     };
 

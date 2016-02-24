@@ -1,0 +1,79 @@
+
+    <h2>Article Search</h2>
+
+
+
+    <form class="search-form" ng-controller="ArticleSearchCtrl">
+
+
+
+        <div class="search-list" >
+
+            <div class="form-group" >
+                <label for="searchTerm">Search Term</label>
+                <input type="text" name="searchTerm" id="searchTerm" class="form-control" ng-model="data.searchTerm" required />
+                <span ng-show="form.searchTerm.$dirty && form.searchTerm.$error.required" class="help-block">Search Term is required</span>
+            </div>
+            <div class="form-actions">
+
+                    <span>Include these websites in search results:</span>
+                    <div class="include-domains">
+                        <span class="include-domain">
+                            <input type="checkbox" ng-model="data.includeBMJ" ng-click="includeWebsite()">
+                            <span class="text">BMJ</span>
+                            </input>
+                        </span>
+                        <span class="include-domain"></span>
+                            <input type="checkbox" ng-model="data.includeCK" ng-click="includeWebsite()">
+                            <span class="text">Clinical Key</span>
+                            </input>
+                        </span>
+                    </div>
+
+                <!--<a href="#/forgot" class="forgot">Forgot username or password?</a>-->
+                <button ng-click="doSearch()" type="submit" ng-disabled="form.$invalid || data.dataLoading" class="btn btn-primary">Search</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <span ng-show="didSearch">
+                    Total Found: {{totalResults}}
+                </span>
+            </div>
+
+                <table st-safe-src="searchTableItems" st-table="displayedSearchCollection" class="table table-striped">
+                   <thead>
+                        <tr>
+                            <th st-sort="title"class="title">Title</th>
+                            <th st-sort="url" class="left url">URL</th>
+                            <th st-sort="dateCrawled" class="article-content">Date Crawled</th>
+                        </tr>
+                        <tr>
+                            <th class="title">
+                                <input st-search="title" placeholder="search by title" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th class="url">
+                                <input st-search="url" placeholder="search by URL" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th class="">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in displayedSearchCollection" >
+                        <td >{{row.title}}</td>
+                        <td class="left "><a href="{{row.url}}" target="_blank" >{{row.url}}</a>
+                            <button class="btn" ngclipboard data-clipboard-text="{{row.url}}">
+                                <img class="clippy" width="13" src="images/clippy.svg" alt="Copy to clipboard">
+                            </button>
+                        </td>
+
+                        <td class="left ">{{row.tstamp | date:'MM-dd-yyyy'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+        </div>
+
+
+
+    </form>
+

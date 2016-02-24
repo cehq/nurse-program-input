@@ -1,7 +1,8 @@
 var masterProgram;
 
 var cehqControllers = angular.module('cehq.controllers',['ui.bootstrap','cehq.constants', 'cehq.services',
-                                                         'app.factories','smart-table','angularSpinners', 'ngMessages']);
+                                                         'app.factories','smart-table','angularSpinners', 'ngMessages',
+                                                         'ngclipboard']);
 
 
 cehqControllers.controller('NavBarCtrl', function ($scope,
@@ -105,6 +106,36 @@ cehqControllers.controller('SignInCtrl', function ($scope, $state, server, AuthS
 
 });
 
+cehqControllers.controller('ArticleSearchCtrl', function ($scope, $state, server, AuthService, $localstorage, $location) {
+    //this.toClipboard = ngClipboard.toClipboard;
+    console.log('ArticleSearchCtrl');
+
+    $scope.data = {};
+    $scope.data.searchTerm = $localstorage.get("last_search", "");
+    $scope.didSearch = false;
+    $scope.data.includeBMJ = ($localstorage.get("include_bmj", "true") === 'true');
+    $scope.data.includeCK = ($localstorage.get("include_clinical_key", "true") === 'true');
+
+    $scope.doSearch = function () {
+        $scope.didSearch = true;
+        console.log('doSearch');
+        $localstorage.set("last_search", $scope.data.searchTerm);
+        server.articleSearch($scope.data.searchTerm).then(function(response) {
+            //alert("response: " + JSON.stringify(response.data.response));
+            $scope.totalResults = response.data.response.numFound;
+            $scope.searchTableItems = response.data.response.docs;
+            $scope.displayedSearchCollection = angular.copy($scope.searchTableItems.docs);
+            console.log(JSON.stringify($scope.displayedSearchCollection));
+        });
+
+
+    };
+
+    $scope.includeWebsite = function() {
+        $localstorage.set("include_bmj", $scope.data.includeBMJ);
+        $localstorage.set("include_clinical_key", $scope.data.includeCK);
+    };
+});
 
 cehqControllers.controller('TestCtrl', function ($scope, $sce) {
 

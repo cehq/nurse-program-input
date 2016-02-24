@@ -555,3 +555,16 @@ tbody > tr,
 .last-updated {
     max-width: 200px;
 }
+
+.search-list .title {
+    width: 40%;
+}
+
+
+.include-domains {
+    padding-bottom: 20px;
+}
+
+.include-domain {
+    padding-right: 8px;
+}

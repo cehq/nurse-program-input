@@ -13,7 +13,11 @@
      {
        "path": "/service",
        "proxyUrl": "http://mycehq.com/service"
-     }
+     },
+      {
+        "path": "/search",
+        "proxyUrl": "http://mycehq.com/solr/CEHQ"
+      }
   ]
 
 }

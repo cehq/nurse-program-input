@@ -36,6 +36,13 @@ cehqApp.config(function($stateProvider, $urlRouterProvider, $httpProvider){
             authenticate: true,
             cache: false
         })
+        .state('articleSearch', {
+            url: '/articleSearch',
+            templateUrl: 'views/articleSearch.html',
+            controller: 'ArticleSearchCtrl',
+            authenticate: true,
+            cache: false
+        })
         .state('login', {
             url: '/login',
             templateUrl: 'views/login.html',
