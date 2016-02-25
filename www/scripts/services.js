@@ -313,12 +313,23 @@ cehqServices.factory('server', function(messages, appConstants, $http, $q, $loca
 
             var includeBMJ = ($localstorage.get("include_bmj", "true") === 'true');
             var includeCK = ($localstorage.get("include_clinical_key", "true") === 'true');
+            var includeAny = ($localstorage.get("include_any", "true") === 'true');
 
-            searchFinal = searchString.replace(/\s+/g, "+%2Btitle%3A");
+            searchFinal = searchString;
+            if (searchString.startsWith('"') && searchString.endsWith('"')) {
+                searchFinal = "%2Btitle%3A" + searchString;
+            } else if (includeAny) {
+                searchFinal = searchString.replace(/\s+/g, " OR ");
+                searchFinal = "%2Btitle%3A" + "(" + searchFinal + ")";
+            } else {
+                searchFinal = searchString.replace(/\s+/g, "+%2Btitle%3A");
+                searchFinal = "%2Btitle%3A" + searchFinal;
+            }
+
             console.log('searchSites: ' + searchFinal);
 
 
-            var url = BASE_URL + "/search/select?q=%2Btitle%3A" + searchFinal; // + "%22";
+            var url = BASE_URL + "/search/select?q=" + searchFinal; // + "%22";
             if (!includeBMJ) {
                 url = url + '+-url:"bmj.com"';
             }

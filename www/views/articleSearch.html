@@ -16,8 +16,23 @@
             </div>
             <div class="form-actions">
 
-                    <span>Include these websites in search results:</span>
+                <div class="include-domains">
+                    <span>Which terms to include:</span>
+                        <span class="include-domain">
+                            <input type="radio" ng-model="data.anyTerms" ng-value="true" >
+                            <span class="text">Any</span>
+                            </input>
+                        </span>
+                        <span class="include-domain"></span>
+                        <input type="radio" ng-model="data.anyTerms" ng-value="false" >
+                            <span class="text">ALL</span>
+                        </input>
+                    </span>
+                </div>
+
+
                     <div class="include-domains">
+                        <span>Include these websites in search results:</span>
                         <span class="include-domain">
                             <input type="checkbox" ng-model="data.includeBMJ" ng-click="includeWebsite()">
                             <span class="text">BMJ</span>

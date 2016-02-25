@@ -115,11 +115,13 @@ cehqControllers.controller('ArticleSearchCtrl', function ($scope, $state, server
     $scope.didSearch = false;
     $scope.data.includeBMJ = ($localstorage.get("include_bmj", "true") === 'true');
     $scope.data.includeCK = ($localstorage.get("include_clinical_key", "true") === 'true');
+    $scope.data.anyTerms = ($localstorage.get("include_any", "true") === 'true');
 
     $scope.doSearch = function () {
         $scope.didSearch = true;
         console.log('doSearch');
         $localstorage.set("last_search", $scope.data.searchTerm);
+        $localstorage.set("include_any", $scope.data.anyTerms);
         server.articleSearch($scope.data.searchTerm).then(function(response) {
             //alert("response: " + JSON.stringify(response.data.response));
             $scope.totalResults = response.data.response.numFound;
@@ -127,8 +129,6 @@ cehqControllers.controller('ArticleSearchCtrl', function ($scope, $state, server
             $scope.displayedSearchCollection = angular.copy($scope.searchTableItems.docs);
             console.log(JSON.stringify($scope.displayedSearchCollection));
         });
-
-
     };
 
     $scope.includeWebsite = function() {
