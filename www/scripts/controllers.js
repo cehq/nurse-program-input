@@ -323,6 +323,8 @@ cehqControllers.controller('ModalCtrl', function ($scope, $state, $location, $mo
         for (i = 0; i < program['learningActivities'].length; i++) {
 
             theActivity = program['learningActivities'][i];
+            //console.log("learningActivities: " + JSON.stringify(program['learningActivities'][i]));
+            delete theActivity.validCSS;
             if (program['learningActivities'][i]['questions'] && program['learningActivities'][i]['questions'].length > 0) {
                 //console.log("learningActivities: " + program['learningActivities'][i]['questions'][0]['questionType']);
                 if (typeof theActivity['questions'][0]['questionType'] !== 'undefined' &&
