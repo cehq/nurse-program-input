@@ -1,10 +1,12 @@
 {
-    "name": "CEHQ SME Tool",
-    "version": "0.0.1",
-    "devDependencies": {
-        "gulp": "^3.9.1",
-        "gulp-file": "^0.2.0",
-        "gulp-s3": "^0.3.0",
-        "replace": "^0.3.0"
-    }
+  "name": "CEHQ SME Tool",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cache-bust": "^1.0.2",
+    "gulp-file": "^0.2.0",
+    "gulp-s3": "^0.3.0",
+    "gulp-wait": "0.0.2",
+    "replace": "^0.3.0"
+  }
 }

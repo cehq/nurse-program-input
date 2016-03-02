@@ -4,19 +4,19 @@
   "proxies": [
     {
       "path": "/service/programs/names",
-      "proxyUrl": "http://mycehq.com/service/programs/names"
+      "proxyUrl": "http://localhost:8080/service/programs/names"
     },
     {
       "path": "/service/login",
-      "proxyUrl": "http://mycehq.com/service/login"
+      "proxyUrl": "http://localhost:8080/service/login"
     },
      {
        "path": "/service",
-       "proxyUrl": "http://mycehq.com/service"
+       "proxyUrl": "http://localhost:8080/service"
      },
       {
         "path": "/search",
-        "proxyUrl": "http://mycehq.com/solr/CEHQ"
+        "proxyUrl": "http://localhost:8080/solr/CEHQ"
       }
   ]
 

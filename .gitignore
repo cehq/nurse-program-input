@@ -2,3 +2,4 @@
 aws.json
 node_modules/
 www/scripts/base.js
+dist/**
