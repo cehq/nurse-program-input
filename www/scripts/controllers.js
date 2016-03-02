@@ -233,7 +233,11 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
         $scope.program.objectives = [{"objective": "Discuss the pathophysiology of ","order": 1},
                                      {"objective": "Describe the signs and symptoms of ","order": 2},
                                      {"objective": "Develop safe and effective care plans for ","order": 3}];
-        $scope.program['learningActivities'] = [{"name": "Activity 1"},{"name": "Activity 2"},{"name": "Activity 3"},{"name": "Activity 4"},{"name": "Activity 5"}];
+        $scope.program['learningActivities'] = [{"name": "Activity 1","questions": [{"question": "",}]},
+                                                {"name": "Activity 2","questions": [{"question": "",}]},
+                                                {"name": "Activity 3","questions": [{"question": "",}]},
+                                                {"name": "Activity 4","questions": [{"question": "",}]},
+                                                {"name": "Activity 5","questions": [{"question": "",}]}];
           //$scope.program['learningActivities'][i]['questions'][0]
         $scope.qType = {};
       }
@@ -253,7 +257,7 @@ cehqControllers.controller('InputFormCtrl', function ($scope, $http, $location, 
         $scope.program.objectives.push(new_objective);
     }
     $scope.addLearningActivity = function () {
-        new_activity = {"name": "New Activity"};
+        new_activity = {"name": "New Activity","questions": [{"question": "",}]};
         console.log(JSON.stringify(new_activity));
         $scope.program['learningActivities'].push(new_activity);
     }
