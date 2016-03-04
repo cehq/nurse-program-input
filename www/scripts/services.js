@@ -310,7 +310,7 @@ cehqServices.factory('server', function(messages, appConstants, $http, $q, $loca
                 });
         },
         articleSearch: function(searchString) {
-
+            console.log('searchString: ' + searchString);
             var includeBMJ = ($localstorage.get("include_bmj", "true") === 'true');
             var includeCK = ($localstorage.get("include_clinical_key", "true") === 'true');
             var includeAny = ($localstorage.get("include_any", "true") === 'true');
